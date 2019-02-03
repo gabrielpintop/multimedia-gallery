@@ -30,11 +30,11 @@ class Multimedia(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=50)
     userId = models.ForeignKey(User,on_delete=models.CASCADE)
-    CreationDate = models.CharField(max_length=20, null=True)
-    IdCategory = models.ForeignKey(Category,on_delete=models.CASCADE)
+    creationDate = models.CharField(max_length=20, null=True)
+    idCategory = models.ForeignKey(Category,on_delete=models.CASCADE)
     typeID = models.CharField(max_length=1000)
-    City = models.CharField(max_length=100, null=True)
-    Country = models.CharField(max_length=100, null=True)
+    city = models.CharField(max_length=100, null=True)
+    country = models.CharField(max_length=100, null=True)
     url = models.CharField(max_length=1000)
 
     def __str__(self):
@@ -43,7 +43,7 @@ class Multimedia(models.Model):
 class MultimediaForm(ModelForm):
     class Meta:
         model = Multimedia
-        fields = ['title', 'author', 'userId','CreationDate', 'IdCategory', 'typeID', 'City', 'Country', 'url']
+        fields = ['title', 'author', 'userId','creationDate', 'idCategory', 'typeID', 'city', 'country', 'url']
 
 class Image(models.Model):
     name = models.CharField(max_length=200)
