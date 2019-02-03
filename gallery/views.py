@@ -8,7 +8,7 @@ from .models import Image, ImageForm
 def index(request):
     images_list = Image.objects.all()
     context = {'images_list': images_list}
-    return render(request, 'gallery/index.html', context)
+    return render(request, 'gallery/multimedia.html', context)
 
 
 def add_image(request):

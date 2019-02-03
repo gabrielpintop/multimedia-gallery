@@ -18,3 +18,22 @@ class ImageForm(ModelForm):
     class Meta:
         model = Image
         fields = ['name', 'url', 'description', 'type']
+
+#Tabla categoria
+class Category(models.Model):
+    name = models.CharField(max_length=100, null=False)
+
+class CategoryForm(ModelForm):
+    class Meta:
+        model = Category
+        fields=['name']
+
+#Tabla comentarios
+class Comment(models.Model):
+    comment = models.CharField(max_length=300, null=False)
+    userId = models.CharField(max_length=100, null=False)
+
+class  CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields =['comment','userId']
