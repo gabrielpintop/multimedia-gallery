@@ -42,7 +42,7 @@ After that, run "python manage.py runserver" to run the app
 ## Running the app after other changes
 
 1) Run on a cmd the command "pip install -r requirements.txt"
-2) Run the app using "python manage.py runserver"
+2) Run the app using "env\Scripts\activate.bat && python manage.py runserver"
 
 ## Before uploading - If you add new modules or libraries
 
