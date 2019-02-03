@@ -1,23 +1,24 @@
 from django.urls import reverse
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Image, ImageForm
+from .models import Multimedia, MultimediaForm,UserForm,User
 # Create your views here.
 
 
 def index(request):
-    images_list = Image.objects.all()
-    context = {'images_list': images_list}
+    multimedia_list = Multimedia.objects.all()
+    context = {'multimedia_list': multimedia_list}
     return render(request, 'gallery/multimedia.html', context)
 
 
-def add_image(request):
+def add_multimedia(request):
     if request.method == 'POST':
-        form = ImageForm(request.POST, request.FILES)
+        form = MultimediaForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('images:index'))
+            return HttpResponseRedirect(reverse('multimedia:index'))
     else:
-        form = ImageForm()
+        form = MultimediaForm()
 
-    return render(request, 'gallery/image_form.html', {'form': form})
+    return render(request, 'gallery/multimedia_form.html', {'form': form})
+

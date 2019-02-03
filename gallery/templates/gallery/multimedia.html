@@ -28,22 +28,22 @@
             </div>
         <div style="margin-left: 3em; margin-top: 2em; ">
             <div class="row">
-            {% for image in images_list %}
-            {% if image.imageFile == None %}
+            {% for multimedia in multimedia_list %}
+            {% if multimedia.multimediaFile == None %}
                 <div class="col-sm-3">
                 <div class="card" style="width: 18rem;">
-                  <img class="card-img-top" src="{{image.url}}" alt="{{image.name}}" width="300px" height="300px">
+                  <img class="card-img-top" src="{{multimedia.url}}" alt="{{multimedia.title}}" width="300px" height="300px">
                   <div class="card-body">
-                      <p class="card-text">{{image.name}}<br/>{{image.description}}</p>
+                      <p class="card-text"><b>Title:</b> {{multimedia.title}}<br/><b>Author:</b> {{multimedia.author}}</p>
                  </div>
                 </div>
                 </div>
             {% else %}
                 <div class="col-sm-3">
                 <div class="card" style="width: 18rem;">
-                  <img class="card-img-top" src="/{{image.imageFile}}" alt="{{image.name}}" width="300px" height="300px">
+                  <img class="card-img-top" src="/{{multimedia.multimediaFile}}" alt="{{multimedia.title}}" width="300px" height="300px">
                   <div class="card-body">
-                      <p class="card-text">{{image.name}}<br/>{{image.description}}</p>
+                      <p class="card-text">Title: {{multimedia.title}}<br/>Author: {{multimedia.author}}</p>
                  </div>
                 </div>
                 </div>

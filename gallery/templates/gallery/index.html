@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Image gallery</title>
+    <title>Multimedia gallery</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
 
@@ -13,11 +13,11 @@
     <h4 class="center">Image gallery</h4>
     <br />
     <div class="center-align">
-        {% for image in images_list %}
-        {% if image.imageFile == None %}
-        <img src="{{image.url}}" width="300px" height="300px">
+        {% for multimedia in multimedia_list %}
+        {% if multimedia.multimediaFile == None %}
+        <img src="{{multimedia.url}}" width="300px" height="300px">
         {% else %}
-        <img src="/{{image.imageFile}}" width="300px" height="300px">
+        <img src="/{{multimedia.multimediaFile}}" width="300px" height="300px">
         {% endif %}
         {% endfor %}
     </div>
