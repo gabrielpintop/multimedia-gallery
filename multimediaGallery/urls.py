@@ -14,5 +14,5 @@ admin.autodiscover()
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('gallery/', include('gallery.urls', namespace="multimedia")),
+    path('', include('gallery.urls', namespace="multimedia")),
 ]
