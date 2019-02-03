@@ -89,3 +89,16 @@ class CommentForm(ModelForm):
         model = Comment
         fields =['comment', 'userId']
 
+
+# Clip model
+class Clip(models.Model):
+    name = models.CharField(max_length=200)
+    initialSec = models.SmallIntegerField(default=0)
+    finalSec = models.SmallIntegerField(default=0)
+    userId = models.CharField(max_length=100, null=False)
+
+
+class ClipForm(ModelForm):
+    class Meta:
+        model = Clip
+        fields = ['name', 'initialSec', 'finalSec', 'userId']
