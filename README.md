@@ -51,5 +51,5 @@ After that, run "python manage.py runserver" to run the app
 
 ## Current functionalities
 
-List images: http://127.0.0.1:8000
-Add image: http://127.0.0.1:8000/admin
+List multimedia: http://127.0.0.1:8000
+Admin: http://127.0.0.1:8000/admin
