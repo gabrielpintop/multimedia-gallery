@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Galeria Multimedia</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body style="background-color:#f0f0f0">
     <div style="background-color:Orange;">
@@ -13,7 +14,14 @@
         <div class="form-group col-lg-5" style="margin-top: 1em;">
             <label for="tipoMedio" class="text-bold">Tipo de medio:</label>
             <select id="tipoMedio" class="form-control col-lg-5" style="margin-left:1em">
-                <option>Seleccionar...</option>
+                <option value="1">all</option>
+                <option value="2">imagen</option> <p categ="imagen"></p>on>
+                <option value="3">audio</option> <p categ="audio"></p>on>
+                <option value="4">video</option> <p categ="video"></p>on>
+                <p><script>var sel = document.getElementById("categoria");
+                        var value = sel.options[sel.selectedIndex].value; // or just sel.value
+                        var text = sel.options[sel.selectedIndex].text;
+                </script></p>
             </select>
         </div>
         <div class="form-group col-lg-5" style="margin-top: 1em">
@@ -29,26 +37,42 @@
         <div style="margin-left: 3em; margin-top: 2em; ">
             <div class="row">
             {% for multimedia in multimedia_list %}
-            {% if multimedia.multimediaFile == None %}
+            {% if multimedia.type.typeId == 'Video' %}
                 <div class="col-sm-3">
-                <div class="card" style="width: 18rem;">
-                  <img class="card-img-top" src="{{multimedia.url}}" alt="{{multimedia.title}}" width="300px" height="300px">
-                  <div class="card-body">
-                      <p class="card-text"><b>Title:</b> {{multimedia.title}}<br/><b>Author:</b> {{multimedia.author}}</p>
-                 </div>
+                    <div class="card border-dark mb-3" style="max-width: 18rem;">
+                        <div class="card-header"><i class="fa fa-video-camera"></i></div>
+  	                        <div class="card-body text-dark">
+                            <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="{{multimedia.url}}" allowfullscreen></iframe></div>
+   	                        <h5 class="card-title">{{multimedia.title}}</h5>
+    	                    <p class="card-text">{{multimedia.author}}</p>
+	                    </div>
+                    </div>
                 </div>
+            {% elif multimedia.type.typeId == 'Audio' %}
+                <div class="col-sm-3">
+                    <div class="card border-success mb-3" style="max-width: 18rem;">
+                        <div class="card-header"><i class="fa fa-file-audio-o"></i></div>
+                            <div class="card-body text-success">
+                            <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="http://www.sanisidrolonas.com.ar/wp-content/uploads/2013/08/cobertura-el-zonda-900-verde-manzana-cod-1702.jpg" ></iframe></div>
+                            <h5 class="card-title">{{multimedia.title}}</h5>
+                            <p class="card-text">{{multimedia.author}}</p>
+                        </div>
+                    </div>
                 </div>
             {% else %}
                 <div class="col-sm-3">
-                <div class="card" style="width: 18rem;">
-                  <img class="card-img-top" src="/{{multimedia.multimediaFile}}" alt="{{multimedia.title}}" width="300px" height="300px">
-                  <div class="card-body">
-                      <p class="card-text">Title: {{multimedia.title}}<br/>Author: {{multimedia.author}}</p>
-                 </div>
-                </div>
+                    <div class="card border-dark mb-3" style="max-width: 18rem;">
+                        <div class="card-header"><i class="fa fa-image"></i></div>
+  	                        <div class="card-body text-dark">
+                            <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="{{multimedia.url}}" allowfullscreen></iframe></div>
+   	                        <h5 class="card-title">{{multimedia.title}}</h5>
+    	                    <p class="card-text">{{multimedia.author}}</p>
+	                    </div>
+                    </div>
                 </div>
             {% endif %}
             {% endfor %}
+            </div>
             </div>
     </div>
     </form>
