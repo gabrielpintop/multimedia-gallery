@@ -1,56 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Galeria Multimedia</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Multimedia Gallery</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
 </head>
-<body style="background-color:#f0f0f0">
+
+<body style="background-color:#f0f0f0; overflow-x: hidden">
     <div style="background-color:Orange;">
-        <h1 class="text-center" style="font-family: fantasy; color: white">Galería Multimedia</h1>
+        <h1 class="text-center" style="font-family: fantasy; color: white">Multimedia Gallery</h1>
     </div>
-    <form class="form-inline" style="background-color:white; margin: 1em">
-        <div class="form-group col-lg-5" style="margin-top: 1em;">
-            <label for="tipoMedio" class="text-bold">Tipo de medio:</label>
-            <select id="tipoMedio" class="form-control col-lg-5" style="margin-left:1em">
-                <option>Seleccionar...</option>
-            </select>
+
+
+    <div class="row" style="display: flex; align-items: center;">
+        <div class="col-1"></div>
+        <div class="col-lg-3 col-md-4 col-12">
+            <div class="form-group mr-2 ml-2">
+                <label for="mediaType" class="text-bold col-form-label">Media type:</label>
+                <select id="mediaType" class="form-control">
+                    <option>Select...</option>
+                    <option>Audio</option>
+                    <option>Image</option>
+                    <option>Video</option>
+                </select>
+            </div>
         </div>
-        <div class="form-group col-lg-5" style="margin-top: 1em">
-            <label for="categoria">Categoria:</label>
-            <select id="categoria" class="form-control col-lg-5 text-bold" style="margin-left:1em">
-                <option>Seleccionar...</option>
-            </select>
+        <div class="col-lg-3 col-md-4 col-12">
+            <div class="form-group mr-2 ml-2">
+                <label for="categoria" class="text-bold col-form-label">Category:</label>
+                <select id="categoria" class="form-control">
+                    <option>Select...</option>
+                </select>
             </div>
-            <div class="form-group col-lg-2">
-                <input type="button" class="btn btn-primary" value="Login"/>
-                <input type="button" class="btn btn-primary" value="Registro" style="margin-left:0.5em"/>
-            </div>
-        <div style="margin-left: 3em; margin-top: 2em; ">
-            <div class="row">
-            {% for multimedia in multimedia_list %}
-            {% if multimedia.multimediaFile == None %}
-                <div class="col-sm-3">
-                <div class="card" style="width: 18rem;">
-                  <img class="card-img-top" src="{{multimedia.url}}" alt="{{multimedia.title}}" width="300px" height="300px">
-                  <div class="card-body">
-                      <p class="card-text"><b>Title:</b> {{multimedia.title}}<br/><b>Author:</b> {{multimedia.author}}</p>
-                 </div>
-                </div>
-                </div>
-            {% else %}
-                <div class="col-sm-3">
-                <div class="card" style="width: 18rem;">
-                  <img class="card-img-top" src="/{{multimedia.multimediaFile}}" alt="{{multimedia.title}}" width="300px" height="300px">
-                  <div class="card-body">
-                      <p class="card-text">Title: {{multimedia.title}}<br/>Author: {{multimedia.author}}</p>
-                 </div>
-                </div>
-                </div>
-            {% endif %}
-            {% endfor %}
-            </div>
+        </div>
+        <div class="col-lg-4 col-md-2 text-right">
+            <input type="button" class="btn btn-primary m-2" value="Sign in" />
+            <input type="button" class="btn btn-primary m-2" value="Sign up" />
+        </div>
+        <div class="col-1"></div>
     </div>
-    </form>
+
+
+
+    <div class="row" style="display: flex; align-items: center;">
+        <div class="col-12">
+            <br />
+        </div>
+        {% for multimedia in multimedia_list %}
+        {% if multimedia.type.typeId == 'Video' %}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+            <div class="card border-dark mx-auto" style="max-width: 18rem;">
+                <div class="card-header"><i class="fas fa-video"></i></div>
+                <div class="card-body text-dark">
+                    <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="{{multimedia.url}}"
+                            allowfullscreen></iframe></div>
+                    <h5 class="card-title mt-2">{{multimedia.title}}</h5>
+                    <p class="card-text">{{multimedia.author}} <br /> {{multimedia.creationDate}}</p>
+                </div>
+            </div>
+        </div>
+        {% elif multimedia.type.typeId == 'Audio' %}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+            <div class="card border-success mx-auto" style="max-width: 18rem;">
+                <div class="card-header"><i class="far fa-file-audio"></i></div>
+                <div class="card-body">
+                    <div class="embed-responsive embed-responsive-16by9 bg-success">
+                        <br />&nbsp;<i class="fas fa-music text-white"></i>
+                    </div>
+                    <h5 class="card-title mt-2">{{multimedia.title}}</h5>
+                    <p class="card-text">{{multimedia.author}} <br /> {{multimedia.creationDate}}</p>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+            <div class="card border-info mx-auto" style="max-width: 18rem;">
+                <div class="card-header"><i class="fa fa-image"></i></div>
+                <div class="card-body text-dark">
+                    <div class="container text-center">
+                        <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;">
+                    </div>
+                    <h5 class="card-title mt-2">{{multimedia.title}}</h5>
+                    <p class="card-text">{{multimedia.author}} <br /> {{multimedia.creationDate}}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+
 </body>
+
 </html>
