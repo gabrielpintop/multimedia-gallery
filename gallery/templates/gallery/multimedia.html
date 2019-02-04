@@ -53,7 +53,7 @@
         {% for multimedia in multimedia_list %}
         {% if multimedia.type.typeId == 'Video' %}
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
-            <div class="card border-dark mx-auto" style="max-width: 18rem;">
+            <div class="card border-dark mx-auto shadow" style="max-width: 18rem;">
                 <div class="card-header"><i class="fas fa-video"></i></div>
                 <div class="card-body text-dark">
                     <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="{{multimedia.url}}"
@@ -65,7 +65,7 @@
         </div>
         {% elif multimedia.type.typeId == 'Audio' %}
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
-            <div class="card border-success mx-auto" style="max-width: 18rem;">
+            <div class="card border-success mx-auto shadow" style="max-width: 18rem;">
                 <div class="card-header"><i class="far fa-file-audio"></i></div>
                 <div class="card-body">
                     <div class="embed-responsive embed-responsive-16by9 bg-success">
@@ -78,7 +78,7 @@
         </div>
         {% else %}
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
-            <div class="card border-info mx-auto" style="max-width: 18rem;">
+            <div class="card border-info mx-auto shadow" style="max-width: 18rem;">
                 <div class="card-header"><i class="fa fa-image"></i></div>
                 <div class="card-body text-dark">
                     <div class="container text-center">
