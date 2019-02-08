@@ -38,12 +38,9 @@ def sign_in(request):
                 user = authenticate(request, username=username, password=password)
                 if user is not None:
                     login(request, user)
-                    print(username)
-                    print(password)
                     return HttpResponseRedirect(reverse('multimedia:index'))
                 else:
-                    print('No')
-                    error = 'Rere'
+                   error = 'Email or password not correct'
         else:
             form = SignInForm()
 
