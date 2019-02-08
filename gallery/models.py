@@ -1,5 +1,5 @@
 from django.db import models
-from django.forms import ModelForm
+from django.forms import ModelForm, Form, CharField, TextInput, EmailField, PasswordInput
 
 # Create your models here.
 
@@ -61,7 +61,6 @@ class MultimediaForm(ModelForm):
         model = Multimedia
         fields = ['title', 'author', 'user', 'creationDate', 'category', 'type', 'city', 'country', 'url']
 
-
 class Image(models.Model):
     name = models.CharField(max_length=200)
     url = models.CharField(max_length=1000)
@@ -102,3 +101,12 @@ class ClipForm(ModelForm):
     class Meta:
         model = Clip
         fields = ['name', 'initialSec', 'finalSec', 'userId']
+
+
+class SignInForm(Form):
+        username = EmailField(max_length=50, widget = TextInput(
+            attrs = {'class': 'form-control'}
+        ), required=True)
+        password = CharField(min_length=8, max_length=10, widget = PasswordInput(
+            attrs = {'class': 'form-control'}
+        ), required=True)
