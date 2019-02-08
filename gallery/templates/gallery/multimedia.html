@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Multimedia Gallery</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
@@ -10,9 +12,9 @@
         crossorigin="anonymous">
 </head>
 
-<body style="background-color:#f0f0f0; overflow-x: hidden">
-    <div style="background-color:Orange;">
-        <h1 class="text-center" style="font-family: fantasy; color: white">Multimedia Gallery</h1>
+<body style="background-color:#f0f0f0; overflow-x: hidden; width: 100%">
+    <div class="bg-dark">
+        <h1 class="text-center pt-2 pb-2" style="font-family: fantasy; color: white">Multimedia Gallery</h1>
     </div>
 
 
@@ -37,14 +39,31 @@
                 </select>
             </div>
         </div>
+        {% if user.is_authenticated %}
         <div class="col-lg-4 col-md-2 text-right">
-            <input type="button" class="btn btn-primary m-2" value="Sign in" />
-            <input type="button" class="btn btn-primary m-2" value="Sign up" />
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle shadow" type="button" id="dropdownMenuLoggedIn"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right border border-secondary" aria-labelledby="dropdownMenuLoggedIn">
+                    <a class="dropdown-item" href="#"><i class="fas fa-info-circle"></i>&nbsp;Profile</a>
+                    <a class="dropdown-item" href="/logOut"><i class="fas fa-sign-out-alt"></i>&nbsp;Log out</a>
+                </div>
+            </div>
         </div>
+        {% else %}
+        <div class="col-lg-4 col-md-2 text-right">
+            <a class="text-white text-decoration-none btn btn-primary m-2 shadow" href="/signIn">
+                <i class="fas fa-sign-in-alt"></i>&nbsp;Sign in
+            </a>
+            <a class="text-white text-decoration-none btn btn-info m-2 shadow" href="/signIn">
+                <i class="fas fa-user-plus"></i>&nbsp;Sign up
+            </a>
+        </div>
+        {% endif %}
         <div class="col-1"></div>
     </div>
-
-
 
     <div class="row" style="display: flex; align-items: center;">
         <div class="col-12">
@@ -93,6 +112,13 @@
         {% endfor %}
     </div>
 
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
 
 </body>
 
