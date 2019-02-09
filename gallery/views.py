@@ -1,8 +1,11 @@
 from django.urls import reverse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Multimedia, MultimediaForm, UserForm, User, SignInForm
+from .models import Multimedia, MultimediaForm, User, SignInForm
+from django.contrib import messages
+from gallery.forms import RegistrationForm
+
 # Create your views here.
 
 
@@ -38,12 +41,9 @@ def sign_in(request):
                 user = authenticate(request, username=username, password=password)
                 if user is not None:
                     login(request, user)
-                    print(username)
-                    print(password)
                     return HttpResponseRedirect(reverse('multimedia:index'))
                 else:
-                    print('No')
-                    error = 'Rere'
+                   error = 'Email or password not correct'
         else:
             form = SignInForm()
 
@@ -54,7 +54,24 @@ def log_out(request):
     if request.user.is_authenticated:
         logout(request)
     
-    return HttpResponseRedirect(reverse('multimedia:index'))
+    return HttpResponseRedirect(reverse('/gallery'))
 
 
-    
+
+def signUp(request):
+    if request.method == 'GET':
+        form = RegistrationForm()
+        args = {'form': form}
+        return render(request, 'gallery/signUp.html', args)
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/signIn')
+        else:
+            messages.error(request, 'Error al diligenciar el formulario. El password seleccionado no cumple con las politicas')
+            return HttpResponseRedirect('/signUp')
+
+
+
+
