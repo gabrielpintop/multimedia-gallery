@@ -43,7 +43,7 @@ def sign_in(request):
                     login(request, user)
                     return HttpResponseRedirect(reverse('multimedia:index'))
                 else:
-                   error = 'Email or password not correct'
+                   error = 'Username or password not correct'
         else:
             form = SignInForm()
 
@@ -54,7 +54,7 @@ def log_out(request):
     if request.user.is_authenticated:
         logout(request)
     
-    return HttpResponseRedirect(reverse('/gallery'))
+    return HttpResponseRedirect(reverse('multimedia:index'))
 
 
 
