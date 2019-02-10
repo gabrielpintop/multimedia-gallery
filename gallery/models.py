@@ -41,7 +41,7 @@ class Multimedia(models.Model):
     city = models.CharField(max_length=100, null=True)
     country = models.CharField(max_length=100, null=True)
     url = models.CharField(max_length=1000)
-    imageFile = models.ImageField(upload_to='staticfiles', null=True)
+    imageFile = models.ImageField(upload_to='static', null=True)
 
     def __str__(self):
         return 'Multimedia: ' + self.title
@@ -49,7 +49,7 @@ class Multimedia(models.Model):
 class MultimediaForm(ModelForm):
     class Meta:
         model = Multimedia
-        fields = ['id', 'title', 'author', 'user', 'creationDate', 'category', 'type', 'city', 'country', 'url']
+        fields = ['id', 'title', 'author', 'creationDate', 'city', 'country', 'url', 'imageFile']
 
 
 class Image(models.Model):
