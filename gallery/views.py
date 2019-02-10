@@ -57,4 +57,7 @@ def log_out(request):
     return HttpResponseRedirect(reverse('multimedia:index'))
 
 
+def get_user(request):
+
+    return render(request, 'gallery/userDetails.html')
     
