@@ -53,7 +53,8 @@
         </div>
         {% else %}
         <div class="col-lg-4 col-md-2 text-right">
-            <a class="text-white text-decoration-none btn btn-primary m-2 shadow" href="/signIn">
+            <a id="signInButton" class="text-white text-decoration-none btn btn-primary m-2 shadow" data-toggle="modal"
+                data-target=".bd-example-modal-sm">
                 <i class="fas fa-sign-in-alt"></i>&nbsp;Sign in
             </a>
             <a class="text-white text-decoration-none btn btn-info m-2 shadow" href="/signUp">
@@ -62,6 +63,43 @@
         </div>
         {% endif %}
         <div class="col-1"></div>
+    </div>
+
+    <div id="signInModal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #343a40">
+                    <h5 class="modal-title text-white" id="exampleModalLongTitle">Sign in</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'multimedia:index' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            {{form.username}}
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            {{form.password}}
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-success" type="submit"><i class="fas fa-sign-in-alt"></i>&nbsp;Sign
+                                in</button>
+                        </div>
+                    </form>
+                    {% if error != '' %}
+                    <hr />
+                    <div class="alert alert-danger text-center small" role="alert">
+                        {{error}}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row" style="display: flex; align-items: center;">
@@ -75,7 +113,7 @@
                 <div class="card-header"><i class="fas fa-video"></i></div>
                 <div class="card-body text-dark">
                     <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="{{multimedia.url}}"
-                            allowfullscreen></iframe></div>
+                            allowfullscreen autoplay=false></iframe></div>
                     <h5 class="card-title mt-2">{{multimedia.title}}</h5>
                     <p class="card-text">{{multimedia.author}} <br /> {{multimedia.creationDate}}</p>
                 </div>
@@ -112,6 +150,8 @@
     </div>
 
 
+
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
@@ -119,6 +159,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
 
+    {% if error != '' %}
+    <script>
+        document.getElementById('signInButton').click();
+    </script>
+    {% endif %}
 </body>
 
 </html>
