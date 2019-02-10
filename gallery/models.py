@@ -59,7 +59,7 @@ class Multimedia(models.Model):
 class MultimediaForm(ModelForm):
     class Meta:
         model = Multimedia
-        fields = ['title', 'author', 'user', 'creationDate', 'category', 'type', 'city', 'country', 'url', 'imageFile']
+        fields = ['title', 'author', 'creationDate', 'city', 'country', 'url', 'imageFile']
 
 
 class Image(models.Model):
