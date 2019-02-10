@@ -194,10 +194,14 @@
                 <div class="card-header"><i class="fa fa-image"></i></div>
                 <div class="card-body text-dark">
                     <div class="container text-center">
-                        {% if multimedia.imageFile == '' %}
+                        {% if multimedia.imageFile == None %}
                         <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
                         {% else %}
-                        <img src="/{{multimedia.imageFile.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                            {% if multimedia.imageFile == '' %}
+                                <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                            {% else %}
+                                <img src="/{{multimedia.imageFile}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                            {% endif %}
                         {% endif %}
                     </div>
                     <h5 class="card-title mt-2">{{multimedia.title}}</h5>
@@ -213,7 +217,16 @@
                           </div>
                           <div class="modal-body">
                               <div class="container text-center">
-                        <img src="{{multimedia.url}}" alt="{{ multimedia.title}}" height="180px" style="max-width: 100%;"></div>
+                                {% if multimedia.imageFile == None %}
+                                  <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                                {% else %}
+                                  {% if multimedia.imageFile == '' %}
+                                    <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                                  {% else %}
+                                    <img src="/{{multimedia.imageFile}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                                  {% endif %}
+                                {% endif %}
+                              </div>
                               <p><strong>Title:</strong> {{ multimedia.title }}</p>
                               <p><strong>Author:</strong> {{ multimedia.author }}</p>
                               <p><strong>Creation Date:</strong> {{ multimedia.creationDate }}</p>

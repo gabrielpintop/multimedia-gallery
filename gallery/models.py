@@ -15,6 +15,9 @@ class UserProfile(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=100, null=False)
 
+    def __str__(self):
+        return self.name
+
 
 class CategoryForm(ModelForm):
     class Meta:
@@ -25,6 +28,8 @@ class CategoryForm(ModelForm):
 class Type(models.Model):
     typeId = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.typeId
 
 class TypeForm(ModelForm):
     class Meta:
@@ -37,8 +42,8 @@ class Multimedia(models.Model):
     author = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     creationDate = models.DateField(auto_now_add=True, blank=False)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
-    type = models.ForeignKey(Type, on_delete=models.CASCADE, default=1)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    type = models.ForeignKey(Type, on_delete=models.CASCADE)
     city = models.CharField(max_length=100, null=True)
     country = models.CharField(max_length=100, null=True)
     url = models.CharField(max_length=1000)
@@ -67,7 +72,7 @@ class MultimediaForm(ModelForm):
 
     class Meta:
         model = Multimedia
-        fields = ['id', 'title', 'author', 'city', 'country', 'url', 'imageFile']
+        fields = ['id', 'title', 'author', 'city', 'category', 'user', 'type', 'country', 'url', 'imageFile']
 
 
 
