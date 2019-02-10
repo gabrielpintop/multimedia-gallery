@@ -58,6 +58,7 @@ def log_out(request):
 
 
 
+
 def signUp(request):
     if request.method == 'GET':
         form = RegistrationForm()
@@ -73,5 +74,7 @@ def signUp(request):
             return HttpResponseRedirect('/signUp')
 
 
+def get_user(request):
 
-
+    return render(request, 'gallery/userDetails.html')
+    
