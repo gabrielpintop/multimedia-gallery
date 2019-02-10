@@ -47,7 +47,7 @@ class Multimedia(models.Model):
     city = models.CharField(max_length=100, null=True)
     country = models.CharField(max_length=100, null=True)
     url = models.CharField(max_length=1000)
-    imageFile = models.ImageField(upload_to='static', null=True)
+    imageFile = models.ImageField(upload_to='media', null=True)
 
     def __str__(self):
         return 'Multimedia: ' + self.title
