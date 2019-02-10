@@ -94,7 +94,7 @@ class ClipForm(ModelForm):
 
 
 class SignInForm(Form):
-        username = EmailField(max_length=50, widget = TextInput(
+        username = CharField(max_length=50, widget = TextInput(
             attrs = {'class': 'form-control'}
         ), required=True)
         password = CharField(min_length=8, max_length=10, widget = PasswordInput(
