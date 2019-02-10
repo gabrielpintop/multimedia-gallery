@@ -7,7 +7,6 @@ from .models import Multimedia, MultimediaForm, User, SignInForm
 from django.contrib import messages
 from gallery.forms import RegistrationForm, EditProfileForm
 
-
 # Create your views here.
 
 
@@ -72,7 +71,7 @@ def signUp(request):
             form.save()
             return redirect('/signIn')
         else:
-            messages.error(request, 'Error al diligenciar el formulario. El password seleccionado no cumple con las politicas')
+            messages.error(request, 'Su contraseña: no puede ser similar a su información personal, debe contener al menos 8 caracteres, no puede ser una contraseña de uso común y no puede ser solo numérica.')
             return HttpResponseRedirect('/signUp')
 
 
