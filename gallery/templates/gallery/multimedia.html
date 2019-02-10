@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Multimedia Gallery</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
@@ -10,11 +12,10 @@
         crossorigin="anonymous">
 </head>
 
-<body style="background-color:#f0f0f0; overflow-x: hidden">
-    <div style="background-color:Orange;">
-        <h1 class="text-center" style="font-family: fantasy; color: white">Multimedia Gallery</h1>
+<body style="background-color:#f0f0f0; overflow-x: hidden; width: 100%">
+    <div class="bg-dark">
+        <h1 class="text-center pt-2 pb-2" style="font-family: fantasy; color: white">Multimedia Gallery</h1>
     </div>
-
 
     <div class="row" style="display: flex; align-items: center;">
         <div class="col-1"></div>
@@ -37,14 +38,31 @@
                 </select>
             </div>
         </div>
+        {% if user.is_authenticated %}
         <div class="col-lg-4 col-md-2 text-right">
-            <input type="button" class="btn btn-primary m-2" value="Sign in" />
-            <input type="button" class="btn btn-primary m-2" value="Sign up" />
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle shadow m-3" type="button" id="dropdownMenuLoggedIn"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user"></i>&nbsp;{{user.first_name}}
+                </button>
+                <div class="dropdown-menu dropdown-menu-right border border-secondary" aria-labelledby="dropdownMenuLoggedIn">
+                    <a class="dropdown-item" href="/userDetails"><i class="fas fa-info-circle"></i>&nbsp;Profile</a>
+                    <a class="dropdown-item" href="/logOut"><i class="fas fa-sign-out-alt"></i>&nbsp;Log out</a>
+                </div>
+            </div>
         </div>
+        {% else %}
+        <div class="col-lg-4 col-md-2 text-right">
+            <a class="text-white text-decoration-none btn btn-primary m-2 shadow" href="/signIn">
+                <i class="fas fa-sign-in-alt"></i>&nbsp;Sign in
+            </a>
+            <a class="text-white text-decoration-none btn btn-info m-2 shadow" href="/signUp">
+                <i class="fas fa-user-plus"></i>&nbsp;Sign up
+            </a>
+        </div>
+        {% endif %}
         <div class="col-1"></div>
     </div>
-
-
 
     <div class="row" style="display: flex; align-items: center;">
         <div class="col-12">
@@ -60,6 +78,33 @@
                             allowfullscreen></iframe></div>
                     <h5 class="card-title mt-2">{{multimedia.title}}</h5>
                     <p class="card-text">{{multimedia.author}} <br /> {{multimedia.creationDate}}</p>
+                    <div id="multimediaDetails_{{ multimedia.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="multimediaDetails_{{ multimedia.id }}">File Details</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                              <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="{{multimedia.url}}"
+                            allowfullscreen></iframe></div>
+                              <p><strong>Title:</strong> {{ multimedia.title }}</p>
+                              <p><strong>Author:</strong> {{ multimedia.author }}</p>
+                              <p><strong>Creation Date:</strong> {{ multimedia.creationDate }}</p>
+                              <p><strong>City:</strong> {{ multimedia.city }}</p>
+                              <p><strong>Country:</strong> {{ multimedia.country }}</p>
+                              <p><strong>Category:</strong> {{ multimedia.category.name }}</p>
+                              <p><strong>Created By:</strong> {{ multimedia.user.username }}</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#multimediaDetails_{{ multimedia.id }}">Details</button>
                 </div>
             </div>
         </div>
@@ -73,6 +118,33 @@
                     </div>
                     <h5 class="card-title mt-2">{{multimedia.title}}</h5>
                     <p class="card-text">{{multimedia.author}} <br /> {{multimedia.creationDate}}</p>
+                    <div id="multimediaDetails_{{ multimedia.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="multimediaDetails_{{ multimedia.id }}">File Details</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                              <div class="embed-responsive embed-responsive-16by9 bg-success">
+                        <br />&nbsp;<i class="fas fa-music text-white"></i></div>
+                              <p><strong>Title:</strong> {{ multimedia.title }}</p>
+                              <p><strong>Author:</strong> {{ multimedia.author }}</p>
+                              <p><strong>Creation Date:</strong> {{ multimedia.creationDate }}</p>
+                              <p><strong>City:</strong> {{ multimedia.city }}</p>
+                              <p><strong>Country:</strong> {{ multimedia.country }}</p>
+                              <p><strong>Category:</strong> {{ multimedia.category.name }}</p>
+                              <p><strong>Created By:</strong> {{ multimedia.user.username }}</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#multimediaDetails_{{ multimedia.id }}">Details</button>
                 </div>
             </div>
         </div>
@@ -88,6 +160,33 @@
                     <h5 class="card-title mt-2">{{multimedia.title}}</h5>
                     <h5 class="card-title mt-2">{{multimedia.imageFile}}</h5>
                     <p class="card-text">{{multimedia.author}} <br /> {{multimedia.creationDate}}</p>
+                    <div id="multimediaDetails_{{ multimedia.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="multimediaDetails_{{ multimedia.id }}">File Details</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                              <div class="container text-center">
+                        <img src="{{multimedia.url}}" alt="{{ multimedia.title}}" height="180px" style="max-width: 100%;"></div>
+                              <p><strong>Title:</strong> {{ multimedia.title }}</p>
+                              <p><strong>Author:</strong> {{ multimedia.author }}</p>
+                              <p><strong>Creation Date:</strong> {{ multimedia.creationDate }}</p>
+                              <p><strong>City:</strong> {{ multimedia.city }}</p>
+                              <p><strong>Country:</strong> {{ multimedia.country }}</p>
+                              <p><strong>Category:</strong> {{ multimedia.category.name }}</p>
+                              <p><strong>Created By:</strong> {{ multimedia.user.username }}</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#multimediaDetails_{{ multimedia.id }}">Details</button>
                 </div>
             </div>
         </div>
@@ -95,6 +194,13 @@
         {% endfor %}
     </div>
 
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
 
 </body>
 

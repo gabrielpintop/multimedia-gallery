@@ -1,24 +1,14 @@
 from django.db import models
-from django.forms import ModelForm
+from django.forms import ModelForm, Form, CharField, TextInput, EmailField, PasswordInput
+from django.contrib.auth.models import User
 
 # Create your models here.
 
-
-# Tabla User
-class User(models.Model):
-    name = models.CharField(max_length=100)
-    lastName = models.CharField(max_length=100)
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     photo = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-
-
-class UserForm(ModelForm):
-    class Meta:
-        model = User
-        fields = ['name', 'lastName', 'photo', 'city', 'country', 'email', 'password']
 
 
 class Category(models.Model):
@@ -59,7 +49,7 @@ class Multimedia(models.Model):
 class MultimediaForm(ModelForm):
     class Meta:
         model = Multimedia
-        fields = ['title', 'author', 'creationDate', 'city', 'country', 'url', 'imageFile']
+        fields = ['id', 'title', 'author', 'user', 'creationDate', 'category', 'type', 'city', 'country', 'url']
 
 
 class Image(models.Model):
@@ -102,3 +92,13 @@ class ClipForm(ModelForm):
     class Meta:
         model = Clip
         fields = ['name', 'initialSec', 'finalSec', 'userId']
+
+
+class SignInForm(Form):
+        username = CharField(max_length=50, widget = TextInput(
+            attrs = {'class': 'form-control'}
+        ), required=True)
+        password = CharField(min_length=8, max_length=10, widget = PasswordInput(
+            attrs = {'class': 'form-control'}
+        ), required=True)
+

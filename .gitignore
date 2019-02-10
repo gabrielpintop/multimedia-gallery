@@ -4,4 +4,4 @@ db.sqlite3
 multimediaGallery/settings.py
 gallery/migrations/*
 .vscode/
-
+.idea
