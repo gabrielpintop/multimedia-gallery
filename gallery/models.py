@@ -49,7 +49,8 @@ class Multimedia(models.Model):
 class MultimediaForm(ModelForm):
     class Meta:
         model = Multimedia
-        fields = ['title', 'author', 'user', 'creationDate', 'category', 'type', 'city', 'country', 'url']
+        fields = ['id', 'title', 'author', 'user', 'creationDate', 'category', 'type', 'city', 'country', 'url']
+
 
 class Image(models.Model):
     name = models.CharField(max_length=200)
