@@ -42,12 +42,12 @@
         {% if user.is_authenticated %}
         <div class="col-lg-4 col-md-2 text-right">
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle shadow" type="button" id="dropdownMenuLoggedIn"
+                <button class="btn btn-secondary dropdown-toggle shadow m-3" type="button" id="dropdownMenuLoggedIn"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-user"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right border border-secondary" aria-labelledby="dropdownMenuLoggedIn">
-                    <a class="dropdown-item" href="#"><i class="fas fa-info-circle"></i>&nbsp;Profile</a>
+                    <a class="dropdown-item" href="/userDetails"><i class="fas fa-info-circle"></i>&nbsp;Profile</a>
                     <a class="dropdown-item" href="/logOut"><i class="fas fa-sign-out-alt"></i>&nbsp;Log out</a>
                 </div>
             </div>
@@ -57,7 +57,7 @@
             <a class="text-white text-decoration-none btn btn-primary m-2 shadow" href="/signIn">
                 <i class="fas fa-sign-in-alt"></i>&nbsp;Sign in
             </a>
-            <a class="text-white text-decoration-none btn btn-info m-2 shadow" href="/signIn">
+            <a class="text-white text-decoration-none btn btn-info m-2 shadow" href="/signUp">
                 <i class="fas fa-user-plus"></i>&nbsp;Sign up
             </a>
         </div>
