@@ -5,7 +5,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Multimedia, MultimediaForm, User, SignInForm
 from django.contrib import messages
 from gallery.forms import RegistrationForm
-
 # Create your views here.
 
 
