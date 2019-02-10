@@ -1,7 +1,7 @@
 from django.urls import reverse
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Multimedia, MultimediaForm,UserForm,User
+from .models import Multimedia, MultimediaForm,UserForm,User, ImageForm
 # Create your views here.
 
 

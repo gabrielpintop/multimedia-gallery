@@ -5,5 +5,5 @@ app_name = 'gallery'
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^add/$', views.add_multimedia, name='addImage'),
+    url(r'^add/$', views.add_multimedia, name='addMultimedia'),
 ]
