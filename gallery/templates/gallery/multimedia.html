@@ -39,7 +39,8 @@
             </div>
         </div>
         {% if user.is_authenticated %}
-        <div class="col-lg-2 col-md-4 text-right"><a class="text-white btn btn-primary m-2 shadow" href="/add">&nbsp;Add multimedia
+        <div class="col-lg-2 col-md-4 text-right"><a class="text-white btn btn-primary m-2 shadow" href="/add">&nbsp;Add
+                multimedia
             </a></div>
         <div class="col-lg-2 text-right">
             <div class="dropdown">
@@ -118,31 +119,32 @@
                             allowfullscreen autoplay=false></iframe></div>
                     <h5 class="card-title mt-2">{{multimedia.title}}</h5>
                     <p class="card-text">{{multimedia.author}} <br /> {{multimedia.creationDate}}</p>
-                    <div id="multimediaDetails_{{ multimedia.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="multimediaDetails_{{ multimedia.id }}">File Details</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                              <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="{{multimedia.url}}"
-                            allowfullscreen></iframe></div>
-                              <p><strong>Title:</strong> {{ multimedia.title }}</p>
-                              <p><strong>Author:</strong> {{ multimedia.author }}</p>
-                              <p><strong>Creation Date:</strong> {{ multimedia.creationDate }}</p>
-                              <p><strong>City:</strong> {{ multimedia.city }}</p>
-                              <p><strong>Country:</strong> {{ multimedia.country }}</p>
-                              <p><strong>Category:</strong> {{ multimedia.category.name }}</p>
-                              <p><strong>Created By:</strong> {{ multimedia.user.username }}</p>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                          </div>
+                    <div id="multimediaDetails_{{ multimedia.id }}" class="modal fade" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="multimediaDetails_{{ multimedia.id }}">File Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item"
+                                            src="{{multimedia.url}}" allowfullscreen></iframe></div>
+                                    <p><strong>Title:</strong> {{ multimedia.title }}</p>
+                                    <p><strong>Author:</strong> {{ multimedia.author }}</p>
+                                    <p><strong>Creation Date:</strong> {{ multimedia.creationDate }}</p>
+                                    <p><strong>City:</strong> {{ multimedia.city }}</p>
+                                    <p><strong>Country:</strong> {{ multimedia.country }}</p>
+                                    <p><strong>Category:</strong> {{ multimedia.category.name }}</p>
+                                    <p><strong>Created By:</strong> {{ multimedia.user.username }}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#multimediaDetails_{{ multimedia.id }}">Details</button>
                 </div>
@@ -158,31 +160,32 @@
                     </div>
                     <h5 class="card-title mt-2">{{multimedia.title}}</h5>
                     <p class="card-text">{{multimedia.author}} <br /> {{multimedia.creationDate}}</p>
-                    <div id="multimediaDetails_{{ multimedia.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="multimediaDetails_{{ multimedia.id }}">File Details</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                              <div class="embed-responsive embed-responsive-16by9 bg-success">
-                        <br />&nbsp;<i class="fas fa-music text-white"></i></div>
-                              <p><strong>Title:</strong> {{ multimedia.title }}</p>
-                              <p><strong>Author:</strong> {{ multimedia.author }}</p>
-                              <p><strong>Creation Date:</strong> {{ multimedia.creationDate }}</p>
-                              <p><strong>City:</strong> {{ multimedia.city }}</p>
-                              <p><strong>Country:</strong> {{ multimedia.country }}</p>
-                              <p><strong>Category:</strong> {{ multimedia.category.name }}</p>
-                              <p><strong>Created By:</strong> {{ multimedia.user.username }}</p>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                          </div>
+                    <div id="multimediaDetails_{{ multimedia.id }}" class="modal fade" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="multimediaDetails_{{ multimedia.id }}">File Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="embed-responsive embed-responsive-16by9 bg-success">
+                                        <br />&nbsp;<i class="fas fa-music text-white"></i></div>
+                                    <p><strong>Title:</strong> {{ multimedia.title }}</p>
+                                    <p><strong>Author:</strong> {{ multimedia.author }}</p>
+                                    <p><strong>Creation Date:</strong> {{ multimedia.creationDate }}</p>
+                                    <p><strong>City:</strong> {{ multimedia.city }}</p>
+                                    <p><strong>Country:</strong> {{ multimedia.country }}</p>
+                                    <p><strong>Category:</strong> {{ multimedia.category.name }}</p>
+                                    <p><strong>Created By:</strong> {{ multimedia.user.username }}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#multimediaDetails_{{ multimedia.id }}">Details</button>
                 </div>
@@ -195,38 +198,39 @@
                 <div class="card-body text-dark">
                     <div class="container text-center">
                         {% if multimedia.imageFile == '' %}
-                        <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                        <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;" />
                         {% else %}
-                        <img src="/{{multimedia.imageFile.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                        <img src="/{{multimedia.imageFile}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;" />
                         {% endif %}
                     </div>
                     <h5 class="card-title mt-2">{{multimedia.title}}</h5>
                     <p class="card-text">{{multimedia.author}} <br /> {{multimedia.creationDate}}</p>
-                    <div id="multimediaDetails_{{ multimedia.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="multimediaDetails_{{ multimedia.id }}">File Details</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                              <div class="container text-center">
-                        <img src="{{multimedia.url}}" alt="{{ multimedia.title}}" height="180px" style="max-width: 100%;"></div>
-                              <p><strong>Title:</strong> {{ multimedia.title }}</p>
-                              <p><strong>Author:</strong> {{ multimedia.author }}</p>
-                              <p><strong>Creation Date:</strong> {{ multimedia.creationDate }}</p>
-                              <p><strong>City:</strong> {{ multimedia.city }}</p>
-                              <p><strong>Country:</strong> {{ multimedia.country }}</p>
-                              <p><strong>Category:</strong> {{ multimedia.category.name }}</p>
-                              <p><strong>Created By:</strong> {{ multimedia.user.username }}</p>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                          </div>
+                    <div id="multimediaDetails_{{ multimedia.id }}" class="modal fade" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="multimediaDetails_{{ multimedia.id }}">File Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container text-center">
+                                        <img src="{{multimedia.url}}" alt="{{ multimedia.title}}" height="180px" style="max-width: 100%;"></div>
+                                    <p><strong>Title:</strong> {{ multimedia.title }}</p>
+                                    <p><strong>Author:</strong> {{ multimedia.author }}</p>
+                                    <p><strong>Creation Date:</strong> {{ multimedia.creationDate }}</p>
+                                    <p><strong>City:</strong> {{ multimedia.city }}</p>
+                                    <p><strong>Country:</strong> {{ multimedia.country }}</p>
+                                    <p><strong>Category:</strong> {{ multimedia.category.name }}</p>
+                                    <p><strong>Created By:</strong> {{ multimedia.user.username }}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#multimediaDetails_{{ multimedia.id }}">Details</button>
                 </div>
