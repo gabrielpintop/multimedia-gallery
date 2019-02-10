@@ -39,7 +39,9 @@
             </div>
         </div>
         {% if user.is_authenticated %}
-        <div class="col-lg-4 col-md-2 text-right">
+        <div class="col-lg-2 col-md-4 text-right"><a class="text-white btn btn-primary m-2 shadow" href="/add">&nbsp;Add multimedia
+            </a></div>
+        <div class="col-lg-2 text-right">
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle shadow m-3" type="button" id="dropdownMenuLoggedIn"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -149,16 +151,18 @@
             </div>
         </div>
         {% else %}
-        <img src="/{{multimedia.imageFile}}" width="300px" height="300px">
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
             <div class="card border-info mx-auto shadow" style="max-width: 18rem;">
                 <div class="card-header"><i class="fa fa-image"></i></div>
                 <div class="card-body text-dark">
                     <div class="container text-center">
-                        <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;">
+                        {% if multimedia.imageFile == '' %}
+                        <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                        {% else %}
+                        <img src="/{{multimedia.imageFile.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                        {% endif %}
                     </div>
                     <h5 class="card-title mt-2">{{multimedia.title}}</h5>
-                    <h5 class="card-title mt-2">{{multimedia.imageFile}}</h5>
                     <p class="card-text">{{multimedia.author}} <br /> {{multimedia.creationDate}}</p>
                     <div id="multimediaDetails_{{ multimedia.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
                       <div class="modal-dialog" role="document">
