@@ -113,8 +113,11 @@
             <div class="card border-success mx-auto shadow" style="max-width: 18rem;">
                 <div class="card-header"><i class="far fa-file-audio"></i></div>
                 <div class="card-body">
-                    <div class="embed-responsive embed-responsive-16by9 bg-success">
-                        <br />&nbsp;<i class="fas fa-music text-white"></i>
+                    <div>
+                        <audio controls>
+                      <source src="{{multimedia.url}}" type="audio/mpeg">
+                      Your browser does not support the audio tag.
+                    </audio>
                     </div>
                     <h5 class="card-title mt-2">{{multimedia.title}}</h5>
                     <p class="card-text">{{multimedia.author}} <br /> {{multimedia.creationDate}}</p>
@@ -128,8 +131,9 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                              <div class="embed-responsive embed-responsive-16by9 bg-success">
-                        <br />&nbsp;<i class="fas fa-music text-white"></i></div>
+                              <div class="container text-center">
+                        <br /><audio controls>
+                                  <source src="horse.mp3" type="audio/mpeg"></audio></div>
                               <p><strong>Title:</strong> {{ multimedia.title }}</p>
                               <p><strong>Author:</strong> {{ multimedia.author }}</p>
                               <p><strong>Creation Date:</strong> {{ multimedia.creationDate }}</p>
