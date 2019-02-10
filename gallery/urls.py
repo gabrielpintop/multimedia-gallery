@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^add/$', views.add_multimedia, name='addImage'),
     url(r'^logOut/$', views.log_out, name='logOut'),
     url(r'^signUp/$', views.signUp, name='signUp'),
+    url(r'^userDetails/$', views.get_user, name='userDetails'),
 ]
