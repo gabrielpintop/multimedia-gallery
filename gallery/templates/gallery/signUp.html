@@ -1,0 +1,29 @@
+{% extends 'gallery/sign_up_form.html' %}
+{% block body %}
+<div class="content-section">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4" align="center"> Registrar Usuarios
+            </legend>
+            {% for message in messages %}
+
+                    <div class="alert alert-success">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+
+                        {{ message }}
+
+                    </div>
+            {% endfor %}
+            {{ form.as_p }}
+        </fieldset>
+        <div class="form-group">
+        <button class="btn btn-outline-info" type="submit">Registrar</button>
+        <a href="/"><button type="button" class="btn btn-outline-danger">Cancelar</button></a>
+                <div class="border-top pt-3">
+                    <small class="text-muted">   ¿Ya tengo una cuenta?    <a class="ml-2" href="/signIn">Sign In</a></small>
+                </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

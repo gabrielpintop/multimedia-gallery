@@ -13,16 +13,15 @@
 </head>
 
 <body>
-    <div class="card mx-auto mt-5" style="width: 18rem;">
-        <div class="card-header text-center">
+    <div class="card mx-auto mt-5 shadow-lg border border-dark" style="width: 18rem;">
+        <div class="card-header text-center text-white bg-dark">
             <h3>Sign in</h3>
         </div>
         <div class="card-body">
             <form action="{% url 'multimedia:signIn' %}" method="POST">
                 {% csrf_token %}
-                {{ error }}
                 <div class="form-group">
-                    <label for="email">Email address</label>
+                    <label for="username">Username</label>
                     {{form.username}}
                 </div>
                 <div class="form-group">
@@ -34,6 +33,12 @@
                         in</button>
                 </div>
             </form>
+            {% if error != '' %}
+            <hr />
+            <div class="alert alert-danger text-center small" role="alert">
+                {{error}}
+            </div>
+            {% endif %}
         </div>
     </div>
 
