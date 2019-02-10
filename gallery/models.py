@@ -34,22 +34,23 @@ class TypeForm(ModelForm):
 class Multimedia(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=50)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     creationDate = models.CharField(max_length=20, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    type = models.ForeignKey(Type, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+    type = models.ForeignKey(Type, on_delete=models.CASCADE, default=1)
     city = models.CharField(max_length=100, null=True)
     country = models.CharField(max_length=100, null=True)
     url = models.CharField(max_length=1000)
+    imageFile = models.ImageField(upload_to='static', null=True)
 
     def __str__(self):
         return 'Multimedia: ' + self.title
 
-
 class MultimediaForm(ModelForm):
     class Meta:
         model = Multimedia
-        fields = ['title', 'author', 'user', 'creationDate', 'category', 'type', 'city', 'country', 'url']
+        fields = ['id', 'title', 'author', 'creationDate', 'city', 'country', 'url', 'imageFile']
+
 
 class Image(models.Model):
     name = models.CharField(max_length=200)

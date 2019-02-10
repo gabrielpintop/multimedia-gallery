@@ -1,10 +1,11 @@
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.urls import reverse
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Multimedia, MultimediaForm, User, SignInForm
 from django.contrib import messages
-from gallery.forms import RegistrationForm
+from gallery.forms import RegistrationForm, EditProfileForm
 
 # Create your views here.
 
@@ -100,5 +101,49 @@ def signUp(request):
 def get_user(request):
     if request.user.is_authenticated:
         return render(request, 'gallery/userDetails.html')
+      
+    return HttpResponseRedirect(reverse('multimedia:index')) 
+
+
+def edit_profile(request):
+    print('edit_profile',request.method,request.user.first_name)
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+        #form = UserChangeForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('gallery:userDetails'))
+    else:
+        #form = UserChangeForm(instance=request.user)
+        form = EditProfileForm(instance=request.user)
+
+
+        args = {'form': form}
+        print('edit_profileX', request.user.first_name, args.values())
+        return render(request, 'gallery/editUser.html', args)
+
+
+def change_password(request):
+
+    print(request.method)
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect(reverse('gallery:editUser'))
+        else:
+            print('error password')
+            messages.error(request,'Error al diligenciar el formulario. El password no cumple los requisitos')
+            return HttpResponseRedirect('/change_password')
+    else:
+        print('get password')
+        form = PasswordChangeForm(user=request.user)
+
+        args = {'form': form}
+        return render(request, 'gallery/change_password.html', args)
 
     return HttpResponseRedirect(reverse('multimedia:index'))
