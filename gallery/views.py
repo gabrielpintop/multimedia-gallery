@@ -75,6 +75,7 @@ def signUp(request):
 
 
 def get_user(request):
+    if request.user.is_authenticated:
+        return render(request, 'gallery/userDetails.html')
 
-    return render(request, 'gallery/userDetails.html')
-    
+    return HttpResponseRedirect(reverse('multimedia:index')) 
