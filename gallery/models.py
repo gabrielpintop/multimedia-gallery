@@ -1,6 +1,7 @@
 from django.db import models
 from django.forms import ModelForm, Form, CharField, TextInput, EmailField, PasswordInput
 from django.contrib.auth.models import User
+from django import forms
 
 # Create your models here.
 
@@ -34,8 +35,8 @@ class TypeForm(ModelForm):
 class Multimedia(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=50)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    creationDate = models.CharField(max_length=20, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    creationDate = models.DateField(auto_now_add=True, blank=False)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     type = models.ForeignKey(Type, on_delete=models.CASCADE, default=1)
     city = models.CharField(max_length=100, null=True)
@@ -47,9 +48,27 @@ class Multimedia(models.Model):
         return 'Multimedia: ' + self.title
 
 class MultimediaForm(ModelForm):
+    title = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control'}
+    ))
+    author = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control'}
+    ))
+    city = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control'}
+    ))
+    country = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control'}
+    ))
+    url = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control'}
+    ), required=False)
+    imageFile = forms.ImageField(required=False)
+
     class Meta:
         model = Multimedia
-        fields = ['id', 'title', 'author', 'creationDate', 'city', 'country', 'url', 'imageFile']
+        fields = ['id', 'title', 'author', 'city', 'country', 'url', 'imageFile']
+
 
 
 class Image(models.Model):
