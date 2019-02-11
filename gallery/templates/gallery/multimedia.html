@@ -174,7 +174,11 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="embed-responsive embed-responsive-16by9 bg-success">
-                                        <br />&nbsp;<i class="fas fa-music text-white"></i></div>
+                                        <br />&nbsp;
+                                        <audio controls>
+                                            <source src="{{multimedia.url}}" type="audio/mpeg">
+                                        </audio>
+                                    </div>
                                     <p><strong>Title:</strong> {{ multimedia.title }}</p>
                                     <p><strong>Author:</strong> {{ multimedia.author }}</p>
                                     <p><strong>Creation Date:</strong> {{ multimedia.creationDate }}</p>
