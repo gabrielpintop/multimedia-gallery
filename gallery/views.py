@@ -102,7 +102,9 @@ def signUp(request):
 
 def get_user(request):
     if request.user.is_authenticated:
-        return render(request, 'gallery/userDetails.html')
+        user = UserProfile.objects.get(user=request.user)
+        args = {'currentUser': user}
+        return render(request, 'gallery/userDetails.html', args)
 
     return HttpResponseRedirect(reverse('multimedia:index'))
 
