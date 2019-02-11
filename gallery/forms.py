@@ -31,7 +31,7 @@ class RegistrationForm(UserCreationForm):
             user_profile = models.UserProfile(user=user, photo=' ', city=' ', country=' ')
             user_profile.save()
 
-        return user
+        return user, user_profile
 
 
 class EditProfileForm(UserChangeForm):

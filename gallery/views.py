@@ -106,7 +106,7 @@ def get_user(request):
 
 
 def edit_profile(request):
-    print('edit_profile',request.method,request.user.first_name)
+    print('edit_profile', request.method, request.user.first_name)
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
         #form = UserChangeForm(request.POST, instance=request.user)
