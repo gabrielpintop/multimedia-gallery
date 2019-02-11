@@ -29,7 +29,11 @@
     <div class="row">
         <div class="col-md-3">
            <div class="col-md-12" align="center">
-               <img class="img-responsive img-portfolio img-hover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt798QNrNe9BusNHgLdIxmuBIiKhL92aoV67X4xCo08SROGWHBUg">
+               {% if user_profile.photo == None %}
+                    <img class="img-responsive img-portfolio img-hover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt798QNrNe9BusNHgLdIxmuBIiKhL92aoV67X4xCo08SROGWHBUg">
+                {% else %}
+                    <img class="img-responsive img-portfolio img-hover" src="{{user_profile.photo}}">
+                {% endif %}
            </div>
         </div>
         <div class="col-md-6">
@@ -47,6 +51,11 @@
                                 <ul class="list-unstyled list-inline list-social-icons">
                                     <li><span><strong>Name: </strong></span>{{user.first_name}} {{user.last_name}}  </li>
                                     <li><span><strong>Email: </strong>{{user.email}}</li>
+                                    {% if user_profile.city != None %}
+                                        <li><span><strong>City: </strong>{{user_profile.city}}</li>
+                                    {% elif user_profile.country != None %}
+                                        <li><span><strong>Country: </strong>{{user_profile.country}}</li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </div>
