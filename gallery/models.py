@@ -5,9 +5,10 @@ from django import forms
 
 # Create your models here.
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    photo = models.CharField(max_length=100, null=True)
+    photo = models.CharField(max_length=500, null=True)
     city = models.CharField(max_length=100, null=True)
     country = models.CharField(max_length=100, null=True)
 
@@ -31,6 +32,7 @@ class Type(models.Model):
     def __str__(self):
         return self.typeId
 
+
 class TypeForm(ModelForm):
     class Meta:
         model = Type
@@ -52,6 +54,7 @@ class Multimedia(models.Model):
     def __str__(self):
         return 'Multimedia: ' + self.title
 
+
 class MultimediaForm(ModelForm):
     title = forms.CharField(widget=forms.TextInput(
         attrs={'class': 'form-control'}
@@ -72,8 +75,8 @@ class MultimediaForm(ModelForm):
 
     class Meta:
         model = Multimedia
-        fields = ['id', 'title', 'author', 'city', 'category', 'user', 'type', 'country', 'url', 'imageFile']
-
+        fields = ['id', 'title', 'author', 'city', 'category',
+                  'user', 'type', 'country', 'url', 'imageFile']
 
 
 class Image(models.Model):
@@ -101,7 +104,7 @@ class Comment(models.Model):
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
-        fields =['comment', 'userId']
+        fields = ['comment', 'userId']
 
 
 # Clip model
@@ -119,10 +122,9 @@ class ClipForm(ModelForm):
 
 
 class SignInForm(Form):
-        username = CharField(max_length=50, widget = TextInput(
-            attrs = {'class': 'form-control'}
-        ), required=True)
-        password = CharField(min_length=8, max_length=10, widget = PasswordInput(
-            attrs = {'class': 'form-control'}
-        ), required=True)
-
+    username = CharField(max_length=50, widget=TextInput(
+        attrs={'class': 'form-control'}
+    ), required=True)
+    password = CharField(min_length=8, max_length=10, widget=PasswordInput(
+        attrs={'class': 'form-control'}
+    ), required=True)
