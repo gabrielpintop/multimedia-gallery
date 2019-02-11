@@ -1,18 +1,22 @@
 from django.db import models
 from django.forms import ModelForm, Form, CharField, TextInput, EmailField, PasswordInput
 from django.contrib.auth.models import User
+from django import forms
 
 # Create your models here.
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    photo = models.CharField(max_length=100)
-    city = models.CharField(max_length=100)
-    country = models.CharField(max_length=100)
+    photo = models.CharField(max_length=100, null=True)
+    city = models.CharField(max_length=100, null=True)
+    country = models.CharField(max_length=100, null=True)
 
 
 class Category(models.Model):
     name = models.CharField(max_length=100, null=False)
+
+    def __str__(self):
+        return self.name
 
 
 class CategoryForm(ModelForm):
@@ -24,6 +28,8 @@ class CategoryForm(ModelForm):
 class Type(models.Model):
     typeId = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.typeId
 
 class TypeForm(ModelForm):
     class Meta:
@@ -35,21 +41,40 @@ class Multimedia(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    creationDate = models.CharField(max_length=20, null=True)
+    creationDate = models.DateField(auto_now_add=True, blank=False)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     type = models.ForeignKey(Type, on_delete=models.CASCADE)
     city = models.CharField(max_length=100, null=True)
     country = models.CharField(max_length=100, null=True)
     url = models.CharField(max_length=1000)
+    imageFile = models.ImageField(upload_to='static', null=True)
 
     def __str__(self):
         return 'Multimedia: ' + self.title
 
-
 class MultimediaForm(ModelForm):
+    title = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control'}
+    ))
+    author = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control'}
+    ))
+    city = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control'}
+    ))
+    country = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control'}
+    ))
+    url = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control'}
+    ), required=False)
+    imageFile = forms.ImageField(required=False)
+
     class Meta:
         model = Multimedia
-        fields = ['title', 'author', 'user', 'creationDate', 'category', 'type', 'city', 'country', 'url']
+        fields = ['id', 'title', 'author', 'city', 'category', 'user', 'type', 'country', 'url', 'imageFile']
+
+
 
 class Image(models.Model):
     name = models.CharField(max_length=200)
