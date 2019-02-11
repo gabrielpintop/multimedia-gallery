@@ -2,6 +2,7 @@ from django.db import models
 from django.forms import ModelForm, Form, CharField, TextInput, EmailField, PasswordInput
 from django.contrib.auth.models import User
 from django import forms
+from multimediaGallery import settings
 
 # Create your models here.
 
@@ -51,6 +52,9 @@ class Multimedia(models.Model):
 
     def __str__(self):
         return 'Multimedia: ' + self.title
+
+    def get_photo(self):
+        return settings.MEDIA_URL + self.imageFile.name
 
 class MultimediaForm(ModelForm):
     title = forms.CharField(widget=forms.TextInput(
@@ -125,4 +129,3 @@ class SignInForm(Form):
         password = CharField(min_length=8, max_length=10, widget = PasswordInput(
             attrs = {'class': 'form-control'}
         ), required=True)
-

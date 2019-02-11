@@ -16,7 +16,6 @@
     <div class="bg-dark">
         <h1 class="text-center pt-2 pb-2" style="font-family: fantasy; color: white">Multimedia Gallery</h1>
     </div>
-            <img src="../../media/prueba.png"/>
 
     <div class="row" style="display: flex; align-items: center;">
         <div class="col-1"></div>
@@ -199,9 +198,9 @@
                         <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
                         {% else %}
                             {% if multimedia.imageFile == '' %}
-                                <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                                <img src="{{multimedia.get_photo}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
                             {% else %}
-                                <img src="/{{multimedia.imageFile}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                                <img src="{{multimedia.get_photo}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
                             {% endif %}
                         {% endif %}
                     </div>
