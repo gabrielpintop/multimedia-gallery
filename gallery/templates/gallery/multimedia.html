@@ -197,14 +197,59 @@
                 <div class="card-header"><i class="fa fa-image"></i></div>
                 <div class="card-body text-dark">
                     <div class="container text-center">
+
+                        {% if multimedia.imageFile == None %}
+                        <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                        {% else %}
+                            {% if multimedia.imageFile == '' %}
+                                <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                            {% else %}
+                                <img src="/{{multimedia.imageFile}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                            {% endif %}
+
                         {% if multimedia.imageFile == '' %}
                         <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;" />
                         {% else %}
                         <img src="/{{multimedia.imageFile}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;" />
+
                         {% endif %}
                     </div>
                     <h5 class="card-title mt-2">{{multimedia.title}}</h5>
                     <p class="card-text">{{multimedia.author}} <br /> {{multimedia.creationDate}}</p>
+
+                    <div id="multimediaDetails_{{ multimedia.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="multimediaDetails_{{ multimedia.id }}">File Details</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                              <div class="container text-center">
+                                {% if multimedia.imageFile == None %}
+                                  <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                                {% else %}
+                                  {% if multimedia.imageFile == '' %}
+                                    <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                                  {% else %}
+                                    <img src="/{{multimedia.imageFile}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                                  {% endif %}
+                                {% endif %}
+                              </div>
+                              <p><strong>Title:</strong> {{ multimedia.title }}</p>
+                              <p><strong>Author:</strong> {{ multimedia.author }}</p>
+                              <p><strong>Creation Date:</strong> {{ multimedia.creationDate }}</p>
+                              <p><strong>City:</strong> {{ multimedia.city }}</p>
+                              <p><strong>Country:</strong> {{ multimedia.country }}</p>
+                              <p><strong>Category:</strong> {{ multimedia.category.name }}</p>
+                              <p><strong>Created By:</strong> {{ multimedia.user.username }}</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                          </div>
+
                     <div id="multimediaDetails_{{ multimedia.id }}" class="modal fade" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -230,6 +275,7 @@
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#multimediaDetails_{{ multimedia.id }}">Details</button>

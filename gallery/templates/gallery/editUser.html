@@ -20,21 +20,19 @@
     <div class="row">
         <div class="col-md-12">
            <ol class="breadcrumb">
-               <li class="breadcrumb-item"><a href="..">Index</a></li>
-               <li class="breadcrumb-item active">User profile</li>
+               <li class="breadcrumb-item"><a href="../..">Index</a></li>
+               <li class="breadcrumb-item"><a href="..">User profile</a></li>
+               <li class="breadcrumb-item active">Edit profile</li>
            </ol>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-3">
-           <div class="col-md-12" align="center">
-               <img class="img-responsive img-portfolio img-hover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt798QNrNe9BusNHgLdIxmuBIiKhL92aoV67X4xCo08SROGWHBUg">
-           </div>
         </div>
         <div class="col-md-6">
            <div class="col-md-12" style="border-width: 1px 1px 2px 1px; border-style: solid; border-color: lightgray;">
-               <h5 style="text-align: center">Mi perfil</h5>
+               <h5 style="text-align: center">My profile</h5>
            </div>
             <form method="POST" name="profileDetails" id="profileForm" novalidate>
                 <div class="col-md-12" style="border-width: 1px 1px 1px 1px; border-style: solid; border-color: lightgray; background: #f1f3f6;">
@@ -42,25 +40,34 @@
                         <div class="control-group form-group">
                             <div class="controls">
                                 <br>
-                                <strong><label>Editar informacion</label></strong>
+                                <label><strong>Edit information</strong></label>
                                 <br>
-                                <ul class="list-unstyled list-inline list-social-icons">
-                                    {% csrf_token %}
-                                    <ul class="list-unstyled list-inline list-social-icons">
-                                     <li><span><strong>Nombre: </strong></span>{{form.first_name}}</li>
-                                     <li><span><strong>Apellido: </strong></span>{{form.last_name}}</li>
-                                        <li><span><strong>Email  : </strong></span>{{form.email}}</li>
-                                        <button type="submit">Guardar</button>
-                                    </ul>
-                                       {# {% csrf_token %} #}
-                                        {# {{ form.as_p }} #}
+                                <br>
+                                <label><strong>First name:</strong></label>
+                                <input type="text" class="form-control" placeholder="{{form.first_name}}"/>
+                                <br>
+                                <label><strong>Last name:</strong></label>
+                                <input type="text" class="form-control" placeholder="{{form.last_name}}"/>
+                                <br>
+                                <label><strong>Email:</strong></label>
+                                <input type="text" class="form-control" placeholder="{{form.email}}"/>
+                                <br>
+                                <label><strong>Photo:</strong></label>
+                                <input type="text" class="form-control" placeholder="{{form.photo}}"/>
+                                <br>
+                                <label><strong>City:</strong></label>
+                                <input type="text" class="form-control" placeholder="{{form.city}}"/>
+                                <br>
+                                <label><strong>Country:</strong></label>
+                                <input type="text" class="form-control" placeholder="{{form.country}}"/>
+                                <br>
 
-                                </ul>
+                                <button type="submit"><a href="..">Save</a></button>
                             </div>
                         </div>
                         <div class="col-md-2 col-md-offset-2">
                             <div class="form-group">
-                                <a class="text-white text-decoration-none btn btn-primary m-2 shadow" href="/change_password"><i class="fas fa-sign-in-alt"></i>&nbsp;Cambiar Clave</a>
+                                <a class="text-white text-decoration-none btn btn-primary m-2 shadow" href="/change_password"><i class="fas fa-sign-in-alt"></i>&nbsp;Change password</a>
                             </div>
                         </div>
                     </div>
