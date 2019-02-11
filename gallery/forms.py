@@ -1,4 +1,5 @@
 from django import forms
+from . import models
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
@@ -27,6 +28,8 @@ class RegistrationForm(UserCreationForm):
 
         if commit:
             user.save()
+            user_profile = models.UserProfile(user=user, photo=' ', city=' ', country=' ')
+            user_profile.save()
 
         return user
 

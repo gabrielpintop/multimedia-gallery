@@ -20,8 +20,9 @@
     <div class="row">
         <div class="col-md-12">
            <ol class="breadcrumb">
-               <li class="breadcrumb-item"><a href="..">Index</a></li>
-               <li class="breadcrumb-item active">User profile</li>
+               <li class="breadcrumb-item"><a href="../..">Index</a></li>
+               <li class="breadcrumb-item"><a href="..">User profile</a></li>
+               <li class="breadcrumb-item active">Edit profile</li>
            </ol>
         </div>
     </div>
@@ -34,7 +35,7 @@
         </div>
         <div class="col-md-6">
            <div class="col-md-12" style="border-width: 1px 1px 2px 1px; border-style: solid; border-color: lightgray;">
-               <h5 style="text-align: center">Mi perfil</h5>
+               <h5 style="text-align: center">My profile</h5>
            </div>
             <form method="POST" name="profileDetails" id="profileForm" novalidate>
                 <div class="col-md-12" style="border-width: 1px 1px 1px 1px; border-style: solid; border-color: lightgray; background: #f1f3f6;">
@@ -42,15 +43,15 @@
                         <div class="control-group form-group">
                             <div class="controls">
                                 <br>
-                                <strong><label>Editar informacion</label></strong>
+                                <strong><label>Edit information</label></strong>
                                 <br>
                                 <ul class="list-unstyled list-inline list-social-icons">
                                     {% csrf_token %}
                                     <ul class="list-unstyled list-inline list-social-icons">
-                                     <li><span><strong>Nombre: </strong></span>{{form.first_name}}</li>
-                                     <li><span><strong>Apellido: </strong></span>{{form.last_name}}</li>
+                                     <li><span><strong>Firt name: </strong></span>{{form.first_name}}</li>
+                                     <li><span><strong>Last name: </strong></span>{{form.last_name}}</li>
                                         <li><span><strong>Email  : </strong></span>{{form.email}}</li>
-                                        <button type="submit">Guardar</button>
+                                        <button type="submit">Save</button>
                                     </ul>
                                        {# {% csrf_token %} #}
                                         {# {{ form.as_p }} #}
