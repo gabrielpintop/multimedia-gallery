@@ -139,4 +139,4 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 DEFAULT_FILE_STORAGE = 'multimediaGallery.storage_backends.MediaStorage'
 
 
-#django_heroku.settings(locals())
+django_heroku.settings(locals())
