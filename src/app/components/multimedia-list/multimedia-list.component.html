@@ -97,9 +97,6 @@
     <br />
   </div>
 
-  <!-- {% for multimedia in multimedia_list %}
-  {% if multimedia.type.typeId == 'Video' %} -->
-
   <div *ngFor="let multimedia of multimediaList" class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
     <div class="card mx-auto shadow" style="max-width: 18rem;" [ngClass]="{'border-dark': multimedia.type.typeId === 'Video', 'border-success': multimedia.type.typeId == 'Audio', 'border-info': multimedia.type.typeId == 'Image' }">
       <div class="card-header"><i class="fas fa-video" [ngClass]="{'fas fa-video': multimedia.type.typeId === 'Video', 'far fa-file-audio': multimedia.type.typeId == 'Audio', 'fa fa-image':  multimedia.type.typeId == 'Image' }"></i></div>
@@ -124,10 +121,20 @@
         <h5 class="card-title mt-2">{{multimedia.title}}</h5>
         <p class="card-text">{{multimedia.author}} <br /> {{multimedia.creationDate}}</p>
       </div>
+
+      <div class="card-footer text-center">
+        <button type="button" class="btn btn-outline-dark shadow-none" (click)="selectMultimedia(multimedia, multimediaDetailsModal)"><i
+            class="fas fa-eye"></i>&nbsp;{{multimedia.type.typeId}}
+          details</button>
+      </div>
     </div>
   </div>
 
   <div class="col-12 mb-4">
     <br />
   </div>
+</div>
+
+<div bsModal #multimediaDetailsModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="multimediaDetailsModal">
+  <app-multimedia-details [multimedia]="selectedMultimedia" (closeModal)="closeModal($event)"></app-multimedia-details>
 </div>

@@ -97,6 +97,8 @@ export class MultimediaListComponent implements OnInit {
     }
   ];
 
+  private modal = null;
+
   public multimediaList = [];
 
   public loading = true;
@@ -106,6 +108,8 @@ export class MultimediaListComponent implements OnInit {
   public category = '';
 
   public categories = [];
+
+  public selectedMultimedia = null;
 
   constructor() {}
 
@@ -148,5 +152,15 @@ export class MultimediaListComponent implements OnInit {
         this.categories.push(category);
       }
     });
+  }
+
+  selectMultimedia(multimedia, modal) {
+    this.selectedMultimedia = multimedia;
+    this.modal = modal;
+    this.modal.show();
+  }
+
+  closeModal(close) {
+    this.modal.hide();
   }
 }
