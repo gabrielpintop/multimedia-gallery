@@ -1,3 +1,18 @@
+# Multimedia Gallery
+
+## Requirements
+
+- NPM. It comes with [Node JS](https://nodejs.org/es/)
+- Angular CLI. Install it using a CMD and typing "npm install -g @angular/cli"
+
+## Initial local deployment
+
+1. Open a CMD on the root folder
+2. Install the required dependencies using "npm i"
+3. Run "ng serve"
+4. Open `http://localhost:4200/` in a browser
+5. Enjoy 😎
+
 # Angular
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
