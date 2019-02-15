@@ -3,19 +3,20 @@
   <div class="col-lg-3 col-md-4 col-12">
     <div class="form-group mr-2 ml-2">
       <label for="mediaType" class="text-bold col-form-label font-weight-bold">Media type:</label>
-      <select id="mediaType" class="form-control">
-        <option>Select...</option>
-        <option>Audio</option>
-        <option>Image</option>
-        <option>Video</option>
+      <select id="mediaType" class="form-control" [(ngModel)]="mediaType" (change)="showFilter()">
+        <option value="">All</option>
+        <option value="Audio">Audio</option>
+        <option value="Image">Image</option>
+        <option value="Video">Video</option>
       </select>
     </div>
   </div>
   <div class="col-lg-3 col-md-4 col-12">
     <div class="form-group mr-2 ml-2">
-      <label for="categoria" class="text-bold col-form-label font-weight-bold">Category:</label>
-      <select id="categoria" class="form-control">
-        <option>Select...</option>
+      <label for="category" class="text-bold col-form-label font-weight-bold">Category:</label>
+      <select id="category" class="form-control" [(ngModel)]="category" (change)="showFilter()">
+        <option value="">All</option>
+        <option *ngFor="let categoryOption of categories" value="{{categoryOption}}">{{categoryOption}}</option>
       </select>
     </div>
   </div>
@@ -98,12 +99,13 @@
 
   <!-- {% for multimedia in multimedia_list %}
   {% if multimedia.type.typeId == 'Video' %} -->
+
   <div *ngFor="let multimedia of multimediaList" class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
     <div class="card mx-auto shadow" style="max-width: 18rem;" [ngClass]="{'border-dark': multimedia.type.typeId === 'Video', 'border-success': multimedia.type.typeId == 'Audio', 'border-info': multimedia.type.typeId == 'Image' }">
       <div class="card-header"><i class="fas fa-video" [ngClass]="{'fas fa-video': multimedia.type.typeId === 'Video', 'far fa-file-audio': multimedia.type.typeId == 'Audio', 'fa fa-image':  multimedia.type.typeId == 'Image' }"></i></div>
       <div class="card-body text-dark">
 
-        <div *ngIf="multimedia.type.typeId === 'Video'" class="embed-responsive embed-responsive-16by9"><video class="embed-responsive-item"
+        <div *ngIf="multimedia.type.typeId === 'Video' " class="embed-responsive embed-responsive-16by9"><video class="embed-responsive-item"
             src="{{multimedia.url}}" allowfullscreen controls></video></div>
 
         <div *ngIf="multimedia.type.typeId === 'Audio'" class="embed-responsive embed-responsive-16by9 bg-success">
