@@ -1,16 +1,41 @@
 <div *ngIf="multimedia" class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
-      <h4 id="dialog-sizes-name1" class="modal-title pull-left">Large modal</h4>
+      <h4 id="dialog-sizes-name1" class="modal-title pull-left">File details</h4>
       <button type="button" class="close pull-right" (click)="close()" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+
     <div class="modal-body">
-      ...
+      <div *ngIf="multimedia.type.typeId === 'Video' " class="embed-responsive embed-responsive-16by9"><video class="embed-responsive-item"
+          src="{{multimedia.url}}" allowfullscreen controls></video></div>
+
+      <div *ngIf="multimedia.type.typeId === 'Audio'" class="embed-responsive embed-responsive-16by9 bg-success">
+        <br />&nbsp;<i class="fas fa-music text-white"></i>
+      </div>
+
+
+      <div *ngIf="multimedia.type.typeId === 'Image'" class="container text-center">
+
+        <img *ngIf="!multimedia.imageFile || multimedia.imageFile === ''" src="{{multimedia.url}}" alt="{{multimedia.title}}"
+          height="180px" style="max-width: 100%;" />
+        <img *ngIf="!multimedia.imageFile && multimedia.imageFile !== ''" src="/{{multimedia.imageFile}}" alt="{{multimedia.title}}"
+          height="180px" style="max-width: 100%;" />
+      </div>
+      <br>
+      <p class="card-text"><strong>Title:</strong> {{ multimedia.title }}</p>
+      <p><strong>Author:</strong> {{ multimedia.author }}</p>
+      <p><strong>Creation Date:</strong> {{ multimedia.creationDate }}</p>
+      <p><strong>City:</strong> {{ multimedia.city }}</p>
+      <p><strong>Country:</strong> {{ multimedia.country }}</p>
+      <p><strong>Category:</strong> {{ multimedia.category.name }}</p>
+      <p><strong>Created By:</strong> {{ multimedia.user.username }}</p>
+
     </div>
+
     <div class="modal-footer">
-      ...
+      <button type="button" class="btn btn-primary" (click)="close()">Close</button>
     </div>
   </div>
 </div>
