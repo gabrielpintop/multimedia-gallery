@@ -1,5 +1,6 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+from django.views.generic.base import TemplateView
 
 admin.autodiscover()
 
@@ -13,6 +14,9 @@ admin.autodiscover()
 # Learn more here: https://docs.djangoproject.com/en/2.1/topics/http/urls/
 
 urlpatterns = [
+
     path("admin/", admin.site.urls),
-    path('', include('gallery.urls', namespace="multimedia")),
+    path('api/', include('gallery.urls', namespace="multimedia")),
+    re_path(r'^$', TemplateView.as_view(
+        template_name="index.html"), name="home")
 ]

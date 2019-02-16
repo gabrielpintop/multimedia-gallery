@@ -11,6 +11,9 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 
+def home(request):
+    return render(request, 'index.html', context=None)
+
 
 def index(request):
     multimedia_list = Multimedia.objects.all()
