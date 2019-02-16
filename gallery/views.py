@@ -1,12 +1,15 @@
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.urls import reverse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 from .models import Multimedia, MultimediaForm, User, SignInForm, UserProfile
 from django.contrib import messages
 from gallery.forms import RegistrationForm, EditProfileForm
 from django.contrib.auth.models import User
+from rest_framework import generics
+from .serializers import MultimediaSerializer,UserSerializer
+
 
 
 # Create your views here.
@@ -165,3 +168,17 @@ def change_password(request):
         return render(request, 'gallery/change_password.html', args)
 
     return HttpResponseRedirect(reverse('multimedia:index'))
+
+
+def getMulti(request):
+    data = Multimedia.objects.all()
+    if request.method == 'GET':
+        serializer = MultimediaSerializer(data, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
+def getUser(request):
+    data = User.objects.all()
+    if request.method == 'GET':
+        serializer = UserSerializer(data, many=True)
+    return JsonResponse(serializer.data, safe=False)

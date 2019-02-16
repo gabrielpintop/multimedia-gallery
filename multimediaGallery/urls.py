@@ -1,5 +1,8 @@
+from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.authtoken import views
+from django.conf import settings
 
 admin.autodiscover()
 
@@ -14,5 +17,9 @@ admin.autodiscover()
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', include('gallery.urls', namespace="multimedia")),
+    path('api/', include('gallery.urls', namespace="multimedia")),
+]
+
+urlpatterns += [
+    path(r'^api/auth', include('rest_framework.urls', namespace='rest_framework'))
 ]
