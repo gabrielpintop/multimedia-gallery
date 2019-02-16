@@ -8,12 +8,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MultimediaListComponent } from './components/multimedia-list/multimedia-list.component';
 import { MultimediaDetailsComponent } from './components/multimedia-details/multimedia-details.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MultimediaListComponent,
-    MultimediaDetailsComponent
+    MultimediaDetailsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
