@@ -134,7 +134,16 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
   }
 
   close() {
-    this.multimedia = null;
+    if (this.multimedia.type.typeId === 'Video') {
+      const video = document.getElementById('mediaPlayer') as HTMLVideoElement;
+      video.pause();
+    } else if (this.multimedia.type.typeId === 'Audio') {
+      const audio: HTMLMediaElement = document.getElementById(
+        'mediaPlayer'
+      ) as HTMLAudioElement;
+      audio.pause();
+    }
+
     this.clipFormError = false;
     this.clipFormErrorMessage = '';
     this.clipLoadingForm = false;
