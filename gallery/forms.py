@@ -1,4 +1,7 @@
 from django import forms
+from django.forms import ModelForm
+
+from gallery.models import Clip
 from . import models
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -45,3 +48,11 @@ class EditProfileForm(UserChangeForm):
             'last_name',
             'password'
         )
+
+
+class ClipForm(ModelForm):
+
+    class Meta:
+        model = Clip
+        fields = ['name', 'initialSec', 'finalSec', 'userId','idMultimedia']
+

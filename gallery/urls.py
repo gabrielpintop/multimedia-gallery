@@ -14,7 +14,9 @@ urlpatterns = [
     url(r'^change_password/$', views.change_password, name='change_password'),
     url(r'^api/getMulti/$', views.getMulti, name='getMulti'),
     url(r'^getUser/$', views.getUser, name='getUser'),
+    url(r'^api/addClip/$', views.clip_create, name='clip_Create'),
+    url(r'^api/clips$', views.get_clips),
+    url(r'^api/clips/(?P<idMultimedia>\d+)$', views.get_id_clip),
     url(r'^api/login/$', views.login, name='login'),
-]
 
 urlpatterns += staticfiles_urlpatterns()
