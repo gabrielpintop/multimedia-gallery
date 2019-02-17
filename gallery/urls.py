@@ -2,6 +2,7 @@ from django.conf.urls import url, include
 from . import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+
 app_name = 'gallery'
 
 urlpatterns = [
@@ -13,6 +14,9 @@ urlpatterns = [
     url(r'^userDetails/$', views.get_user, name='userDetails'),
     url(r'^userDetails/editUser/$', views.edit_profile, name='editUser'),
     url(r'^change_password/$', views.change_password, name='change_password'),
+    url(r'^getMulti/$', views.getMulti, name='getMulti'),
+    url(r'^getUser/$', views.getUser, name='getUser'),
+    url(r'^login/$', views.login, name='login'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

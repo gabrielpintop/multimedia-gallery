@@ -1,12 +1,24 @@
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.urls import reverse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import Multimedia, MultimediaForm, User, SignInForm, UserProfile
 from django.contrib import messages
 from gallery.forms import RegistrationForm, EditProfileForm
 from django.contrib.auth.models import User
+from rest_framework import generics
+from .serializers import MultimediaSerializer, UserSerializer
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.authtoken.models import Token
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.status import (
+    HTTP_400_BAD_REQUEST,
+    HTTP_404_NOT_FOUND,
+    HTTP_200_OK
+)
+from rest_framework.response import Response
 
 
 # Create your views here.
@@ -51,6 +63,7 @@ def add_multimedia(request):
 
     return render(request, 'gallery/multimedia_form.html', {'form': form})
 
+
 # Handles the sign in of an user
 # If the user is already logged in, the user is redirected to the index page
 
@@ -78,6 +91,7 @@ def sign_in(request):
 
     return render(request, 'gallery/sign_in_form.html', {'form': form, 'error': error})
 
+
 # Handles the log out of an user
 
 
@@ -99,7 +113,8 @@ def signUp(request):
             form.save()
             return redirect('/signIn')
         else:
-            messages.error(request, 'Su contraseña: no puede ser similar a su información personal, debe contener al menos 8 caracteres, no puede ser una contraseña de uso común y no puede ser solo numérica.')
+            messages.error(request,
+                           'Su contraseña: no puede ser similar a su información personal, debe contener al menos 8 caracteres, no puede ser una contraseña de uso común y no puede ser solo numérica.')
             return HttpResponseRedirect('/signUp')
 
 
@@ -147,7 +162,6 @@ def edit_profile(request):
 
 
 def change_password(request):
-
     print(request.method)
 
     if request.method == 'POST':
@@ -170,3 +184,35 @@ def change_password(request):
         return render(request, 'gallery/change_password.html', args)
 
     return HttpResponseRedirect(reverse('multimedia:index'))
+
+
+def getMulti(request):
+    data = Multimedia.objects.all()
+    if request.method == 'GET':
+        serializer = MultimediaSerializer(data, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
+def getUser(request):
+    data = User.objects.all()
+    if request.method == 'GET':
+        serializer = UserSerializer(data, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
+@csrf_exempt
+@api_view(["POST"])
+@permission_classes((AllowAny,))
+def login(request):
+    username = request.data.get("username")
+    password = request.data.get("password")
+    if username is None or password is None:
+        return Response({'error': 'Please provide both username and password'},
+                        status=HTTP_400_BAD_REQUEST)
+    user = authenticate(username=username, password=password)
+    if not user:
+        return Response({'error': 'Invalid Credentials'},
+                        status=HTTP_404_NOT_FOUND)
+    token, _ = Token.objects.get_or_create(user=user)
+    return Response({'token': token.key},
+                    status=HTTP_200_OK)
