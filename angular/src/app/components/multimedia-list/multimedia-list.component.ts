@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MultimediasService } from 'src/app/services/multimedias/multimedias.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-multimedia-list',
@@ -6,88 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./multimedia-list.component.css']
 })
 export class MultimediaListComponent implements OnInit {
-  private multimediaListOptions = [
-    {
-      type: {
-        typeId: 'Video'
-      },
-      title: 'Forest from a drone',
-      author: 'Pexels',
-      creationDate: '2019-02-14',
-      city: 'Bogotá',
-      country: 'Colombia',
-      category: {
-        name: 'Forests'
-      },
-      url:
-        // tslint:disable-next-line: max-line-length
-        'https://player.vimeo.com/external/214503702.hd.mp4?s=024a43c102f8e7bbe0f54105ae3bbe7cef64ffb1&profile_id=119&oauth2_token_id=57447761&download=1',
-      imageFile: '',
-      user: {
-        username: 'gabopinto'
-      }
-    },
-    {
-      type: {
-        typeId: 'Image'
-      },
-      title: 'Gorilla',
-      author: 'Pixabay',
-      creationDate: '2019-02-15',
-      city: 'Kampala',
-      country: 'Uganda',
-      category: {
-        name: 'Animals'
-      },
-      imageFile: '',
-      url:
-        // tslint:disable-next-line: max-line-length
-        'https://images.pexels.com/photos/39571/gorilla-silverback-animal-silvery-grey-39571.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-      user: {
-        username: 'gabopinto'
-      }
-    },
-    {
-      type: {
-        typeId: 'Audio'
-      },
-      title: 'To My Love',
-      author: 'Bomba Estereo',
-      creationDate: '2019-02-14',
-      city: 'Bogotá',
-      country: 'Colombia',
-      category: {
-        name: 'Songs'
-      },
-      imageFile: '',
-      url:
-        // tslint:disable-next-line: max-line-length
-        'https://d2tml28x3t0b85.cloudfront.net/tracks/stream_files/000/696/722/original/Bomba%20Est%C3%A9reo%20-%20To%20My%20Love%20%28Moombahton%20Bootleg%29.mp3?1514668785',
-      user: {
-        username: 'gabopinto'
-      }
-    },
-    {
-      type: {
-        typeId: 'Video'
-      },
-      title: 'Dog playing',
-      author: 'Fan made',
-      creationDate: '2019-02-14',
-      city: 'London',
-      country: 'England',
-      category: {
-        name: 'Animals'
-      },
-      url:
-        // tslint:disable-next-line: max-line-length
-        'https://player.vimeo.com/external/210743784.hd.mp4?s=54d206e642d880aa41dfbae377ca80f71c466761&profile_id=119&oauth2_token_id=57447761&download=1',
-      imageFile: '',
-      user: {
-        username: 'gabopinto'
-      }
-    }
-  ];
+  private multimediaListOptions = [];
 
   private modal = null;
 
@@ -103,15 +24,49 @@ export class MultimediaListComponent implements OnInit {
 
   public selectedMultimedia = null;
 
-  constructor() {}
+  public isAuthenticated = false;
+
+  public username = '';
+
+  public success = '#28a745';
+
+  constructor(
+    private authenticationService: AuthenticationService,
+    private multimediasService: MultimediasService
+  ) {}
 
   ngOnInit() {
-    setTimeout(() => {
-      this.loading = false;
-      this.loadCategories();
-      this.multimediaListOptions.sort(this.compare);
-      this.multimediaList = this.multimediaListOptions;
-    }, 0);
+    this.checkAuthentication();
+    this.loadMultimedias();
+  }
+
+  checkAuthentication() {
+    const authentication = this.authenticationService.isAuthenticated();
+    if (authentication) {
+      this.username = authentication;
+      this.isAuthenticated = true;
+    } else {
+      this.username = '';
+      this.isAuthenticated = false;
+    }
+  }
+
+  logOut() {
+    this.authenticationService.logOut();
+  }
+
+  loadMultimedias() {
+    this.multimediasService
+      .getMultimedias()
+      .then((data: any) => {
+        this.multimediaListOptions = data;
+        this.multimediaListOptions.sort(this.compare);
+        this.loadCategories();
+        this.loading = false;
+      })
+      .catch(err => {
+        alert(err);
+      });
   }
 
   showFilter() {
@@ -145,6 +100,7 @@ export class MultimediaListComponent implements OnInit {
         this.categories.push(category);
       }
     });
+    this.multimediaList = this.multimediaListOptions;
   }
 
   selectMultimedia(multimedia, modal) {

@@ -20,26 +20,25 @@
       </select>
     </div>
   </div>
-  <!-- {% if user.is_authenticated %}
-  <div class="col-lg-4 text-right">
-      <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle shadow m-3" type="button" id="dropdownMenuLoggedIn"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-user"></i>&nbsp;{{user.first_name}}
-          </button>
-          <div class="dropdown-menu dropdown-menu-right border border-secondary" aria-labelledby="dropdownMenuLoggedIn">
-              <a class="dropdown-item" href="/userDetails"><i class="fas fa-info-circle"></i>&nbsp;Profile</a>
-              <a class="dropdown-item" href="/logOut"><i class="fas fa-sign-out-alt"></i>&nbsp;Log out</a>
-          </div>
+  <div *ngIf="isAuthenticated" class="col-lg-4 text-right">
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle shadow m-3" type="button" id="dropdownMenuLoggedIn" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-user"></i>&nbsp;{{username}}
+      </button>
+      <div class="dropdown-menu dropdown-menu-right border border-secondary" aria-labelledby="dropdownMenuLoggedIn">
+        <a class="dropdown-item" href="/userDetails"><i class="fas fa-info-circle"></i>&nbsp;Profile</a>
+        <button class="dropdown-item" (click)="logOut()"><i class="fas fa-sign-out-alt"></i>&nbsp;Log out</button>
       </div>
+    </div>
   </div>
-  <div class="col-12 text-center">
-      <a class="text-white btn btn-primary m-2 shadow" href="/add"><i class="fas fa-plus"></i>&nbsp;Add
-          multimedia
-      </a>
+  <div *ngIf="isAuthenticated" class="col-12 text-center">
+    <a class="text-white btn btn-primary m-2 shadow" href="/add"><i class="fas fa-plus"></i>&nbsp;Add
+      multimedia
+    </a>
   </div>
-  {% else %} -->
-  <div class="col-lg-4 col-md-2 text-right">
+
+  <div *ngIf="!isAuthenticated" class="col-lg-4 col-md-2 text-right">
     <button type="button" class="text-white text-decoration-none btn btn-primary m-2 shadow" (click)="openLoginModal(loginModal)">
       <i class="fas fa-sign-in-alt"></i>&nbsp;Sign in
     </button>
@@ -47,50 +46,10 @@
       <i class="fas fa-user-plus"></i>&nbsp;Sign up
     </a>
   </div>
-  <!-- {% endif %} -->
   <div class="col-1"></div>
 </div>
 
-<!--
-<div id="signInModal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header" style="background-color: #343a40">
-        <h5 class="modal-title text-white" id="exampleModalLongTitle">Sign in</h5>
-        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="{% url 'multimedia:index' %}" method="POST">
-          {% csrf_token %}
-          <div class="form-group">
-            <label for="username">Username</label>
-            {{form.username}}
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            {{form.password}}
-          </div>
-          <div class="text-center">
-            <button class="btn btn-success" type="submit"><i class="fas fa-sign-in-alt"></i>&nbsp;Sign
-              in</button>
-          </div>
-        </form>
-        {% if error != '' %}
-        <hr />
-        <div class="alert alert-danger text-center small" role="alert">
-          {{error}}
-        </div>
-        {% endif %}
-      </div>
-    </div>
-  </div>
-</div> -->
-
-
-<div class="row" style="display: flex; align-items: center;">
+<div *ngIf="!loading" class="row" style="display: flex; align-items: center;">
 
   <div class="col-12">
     <br />
@@ -132,6 +91,10 @@
   <div class="col-12 mb-4">
     <br />
   </div>
+</div>
+
+<div *ngIf="loading" class="text-center">
+  <sk-chasing-dots [color]="success"></sk-chasing-dots>
 </div>
 
 <div bsModal #multimediaDetailsModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="multimediaDetailsModal">

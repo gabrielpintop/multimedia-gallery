@@ -41,7 +41,7 @@ def index(request):
             if user is not None:
                 login(request, user)
                 error = ''
-                return HttpResponseRedirect(reverse('multimedia:index'))
+                return HttpResponseRedirect('/')
             else:
                 error = 'Username or password not correct'
         else:
@@ -59,7 +59,7 @@ def add_multimedia(request):
         form = MultimediaForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('multimedia:index'))
+            return HttpResponseRedirect('/')
     else:
         form = MultimediaForm()
 
@@ -85,7 +85,7 @@ def sign_in(request):
                 if user is not None:
                     login(request, user)
                     error = ''
-                    return HttpResponseRedirect(reverse('multimedia:index'))
+                    return HttpResponseRedirect('/')
                 else:
                     error = 'Username or password not correct'
         else:
@@ -97,13 +97,6 @@ def sign_in(request):
 # Handles the log out of an user
 
 
-def log_out(request):
-    if request.user.is_authenticated:
-        logout(request)
-
-    return HttpResponseRedirect(reverse('multimedia:index'))
-
-
 def signUp(request):
     if request.method == 'GET':
         form = RegistrationForm()
@@ -113,7 +106,7 @@ def signUp(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/signIn')
+            return redirect('/')
         else:
             messages.error(request,
                            'Su contraseña: no puede ser similar a su información personal, debe contener al menos 8 caracteres, no puede ser una contraseña de uso común y no puede ser solo numérica.')
@@ -126,7 +119,7 @@ def get_user(request):
         args = {'currentUser': user}
         return render(request, 'gallery/userDetails.html', args)
 
-    return HttpResponseRedirect(reverse('multimedia:index'))
+    return HttpResponseRedirect('/')
 
 
 def edit_profile(request):
@@ -185,8 +178,10 @@ def change_password(request):
         args = {'form': form}
         return render(request, 'gallery/change_password.html', args)
 
-    return HttpResponseRedirect(reverse('multimedia:index'))
+    return HttpResponseRedirect('/')
 
+
+# ------------------- Api ------------------------
 
 def getMulti(request):
     data = Multimedia.objects.all()
@@ -214,9 +209,9 @@ def login(request):
     user = authenticate(username=username, password=password)
     if not user:
         return Response({'error': 'Invalid Credentials'},
-                        status=HTTP_404_NOT_FOUND)
+                        status=HTTP_400_BAD_REQUEST)
     token, _ = Token.objects.get_or_create(user=user)
-    return Response({'token': token.key},
+    return Response({'token': token.key, 'username': user.username},
                     status=HTTP_200_OK)
 
 @csrf_exempt

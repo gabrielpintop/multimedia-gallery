@@ -134,6 +134,10 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
   }
 
   close() {
+    this.clipFormError = false;
+    this.clipFormErrorMessage = '';
+    this.clipLoadingForm = false;
+    this.selectedClip = false;
     this.closeModal.emit(true);
   }
 }
