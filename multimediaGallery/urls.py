@@ -20,8 +20,7 @@ admin.autodiscover()
 urlpatterns = [
 
     path("admin/", admin.site.urls),
-    path('api/', include('gallery.urls', namespace="multimedia")),
+    path('', include('gallery.urls', namespace="multimedia")),
     re_path(r'^$', TemplateView.as_view(
         template_name="index.html"), name="home")
 ]
-

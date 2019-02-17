@@ -1,5 +1,5 @@
-import { Component, OnInit, Output,
-EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -7,10 +7,9 @@ EventEmitter } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
   @Output() private closeModal = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService) {}
 
   public loginFormErrorMessage = '';
 
@@ -21,24 +20,29 @@ export class LoginComponent implements OnInit {
     password: ''
   };
 
-  ngOnInit() {
-  }
+  public loginLoadingForm = false;
+
+  public success = '#28a745';
+
+  ngOnInit() {}
 
   onSubmit() {
-    if (this.login.username === 'natha') {
-      this.loginFormErrorMessage = 'There is an error with your credentials';
-      this.loginFormError = true;
-    } else {
-      setTimeout(() => {
-        this.login.username = '';
-        this.login.username = '';
-      }, 1000);
-      window.location.reload();
-    }
+    this.loginFormError = false;
+    this.loginFormErrorMessage = '';
+    this.loginLoadingForm = true;
+    this.authenticationService
+      .login(this.login.username, this.login.password)
+      .then(data => {
+        window.location.reload();
+      })
+      .catch(err => {
+        this.loginFormErrorMessage = err;
+        this.loginFormError = true;
+        this.loginLoadingForm = false;
+      });
   }
 
   close() {
     this.closeModal.emit(true);
   }
-
 }

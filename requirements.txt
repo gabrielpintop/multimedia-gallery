@@ -21,3 +21,4 @@ static3==0.7.0
 whitenoise==4.1.2
 wrapt==1.11.1
 djangorestframework==3.9.1
+django-cors-headers==2.4.0
