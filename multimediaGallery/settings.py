@@ -83,13 +83,9 @@ WSGI_APPLICATION = "multimediaGallery.wsgi.application"
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd7nis00up2kep',
-        'USER': 'sroftvqvvreytu',
-        'PASSWORD': 'ca8c7715a6a347e73881a06974768fd758e938bbf6f98ce4c4a6c23488d6522d',
-        'HOST': 'ec2-54-243-228-140.compute-1.amazonaws.com',
-        'PORT': '5432',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3")
     }
 }
 
