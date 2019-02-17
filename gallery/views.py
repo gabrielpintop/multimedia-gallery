@@ -223,7 +223,7 @@ def clip_create(request):
             name=json_data['name'],
             initialSec=json_data['initialSec'],
             finalSec=json_data['finalSec'],
-            userId=User.objects.get(id=json_data['userId']),
+            userId=User.objects.get(username=json_data['username']),
             idMultimedia=Multimedia.objects.get(id=(json_data['idMultimedia'])))
         print("clip create", newClip.name)
         newClip.save()
