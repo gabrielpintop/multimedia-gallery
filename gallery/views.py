@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import Multimedia, MultimediaForm, User, SignInForm, UserProfile
+from .models import Multimedia, MultimediaForm, User, SignInForm, UserProfile, Clip
 from django.contrib import messages
 from gallery.forms import RegistrationForm, EditProfileForm
 from django.contrib.auth.models import User
@@ -19,9 +19,14 @@ from rest_framework.status import (
     HTTP_200_OK
 )
 from rest_framework.response import Response
-
+from .serializers import MultimediaSerializer,UserSerializer
+import json
+from django.core import serializers
 
 # Create your views here.
+
+def home(request):
+    return render(request, 'index.html', context=None)
 
 
 def index(request):
@@ -117,7 +122,9 @@ def signUp(request):
 
 def get_user(request):
     if request.user.is_authenticated:
-        return render(request, 'gallery/userDetails.html')
+        user = UserProfile.objects.get(user=request.user)
+        args = {'currentUser': user}
+        return render(request, 'gallery/userDetails.html', args)
 
     return HttpResponseRedirect(reverse('multimedia:index'))
 
@@ -211,3 +218,29 @@ def login(request):
     token, _ = Token.objects.get_or_create(user=user)
     return Response({'token': token.key},
                     status=HTTP_200_OK)
+
+@csrf_exempt
+def clip_create(request):
+
+    if request.method == 'POST':
+        json_data = json.loads(request.body)
+        print(clip_create,)
+        newClip = Clip(
+            name=json_data['name'],
+            initialSec=json_data['initialSec'],
+            finalSec=json_data['finalSec'],
+            userId=User.objects.get(id=json_data['userId']),
+            idMultimedia=Multimedia.objects.get(id=(json_data['idMultimedia'])))
+        print("clip create", newClip.name)
+        newClip.save()
+    return HttpResponse(serializers.serialize("json", [newClip]))
+
+
+def get_clips(request):
+    clip_list = Clip.objects.all()
+    return HttpResponse(serializers.serialize("json",clip_list))
+
+
+def get_id_clip(request, idMultimedia=None):
+    clip_list = Clip.objects.filter(idMultimedia = idMultimedia)
+    return HttpResponse(serializers.serialize("json",clip_list))

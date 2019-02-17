@@ -209,7 +209,7 @@
                             {% if multimedia.imageFile == '' %}
                                 <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
                             {% else %}
-                                <img src="{{multimedia.get_photo}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+                                <img src="{{multimedia.imageFile}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
                             {% endif %}
                         {% endif %}
                     </div>
@@ -234,7 +234,7 @@
 				            {% if multimedia.imageFile == '' %}
 				                <img src="{{multimedia.url}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
 				            {% else %}
-				                <img src="{{multimedia.get_photo}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
+				                <img src="{{multimedia.imageFile}}" alt="{{multimedia.title}}" height="180px" style="max-width: 100%;"/>
 				            {% endif %}
 				        {% endif %}
                                     </div>

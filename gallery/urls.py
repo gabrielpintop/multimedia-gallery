@@ -17,6 +17,9 @@ urlpatterns = [
     url(r'^getMulti/$', views.getMulti, name='getMulti'),
     url(r'^getUser/$', views.getUser, name='getUser'),
     url(r'^login/$', views.login, name='login'),
+    url(r'^api/addClip/$', views.clip_create, name='clip_Create'),
+    url(r'^api/clips$', views.get_clips),
+    url(r'^api/clips/(?P<idMultimedia>\d+)$', views.get_id_clip),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

@@ -63,7 +63,7 @@ ROOT_URLCONF = "multimediaGallery.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(PROJECT_ROOT), 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -83,13 +83,9 @@ WSGI_APPLICATION = "multimediaGallery.wsgi.application"
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd7nis00up2kep',
-        'USER': 'sroftvqvvreytu',
-        'PASSWORD': 'ca8c7715a6a347e73881a06974768fd758e938bbf6f98ce4c4a6c23488d6522d',
-        'HOST': 'ec2-54-243-228-140.compute-1.amazonaws.com',
-        'PORT': '5432',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3")
     }
 }
 
@@ -129,20 +125,6 @@ STATICFILES_DIRS=[
 ]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
-AWS_S3_ACCESS_KEY_ID = 'AKIAIUJX2XVF7VRGLCIQ'
-AWS_S3_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'mydjango-static'
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_LOCATION = 'static'
-AWS_MEDIA_LOCATION = 'media'
-STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_MEDIA_LOCATION)
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-DEFAULT_FILE_STORAGE = 'multimediaGallery.storage_backends.MediaStorage'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

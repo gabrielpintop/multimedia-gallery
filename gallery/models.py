@@ -50,7 +50,7 @@ class Multimedia(models.Model):
     city = models.CharField(max_length=100, null=True)
     country = models.CharField(max_length=100, null=True)
     url = models.CharField(max_length=1000)
-    imageFile = models.ImageField(upload_to='media', null=True)
+    imageFile = models.ImageField(upload_to='static', null=True)
 
     def __str__(self):
         return 'Multimedia: ' + self.title
@@ -115,13 +115,11 @@ class Clip(models.Model):
     name = models.CharField(max_length=200)
     initialSec = models.SmallIntegerField(default=0)
     finalSec = models.SmallIntegerField(default=0)
-    userId = models.CharField(max_length=100, null=False)
+    userId = models.ForeignKey(User, on_delete=models.CASCADE)
+    idMultimedia = models.ForeignKey(Multimedia, on_delete=models.CASCADE)
 
-
-class ClipForm(ModelForm):
-    class Meta:
-        model = Clip
-        fields = ['name', 'initialSec', 'finalSec', 'userId']
+    def __str__(self):
+        return self.name
 
 
 class SignInForm(Form):
