@@ -120,8 +120,6 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
   }
 
   removeClip() {
-    console.log('HASA');
-
     if (this.selectedClip) {
       this.selectedClip = null;
     }
@@ -136,6 +134,7 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
   }
 
   close() {
+    this.multimedia = null;
     this.clipFormError = false;
     this.clipFormErrorMessage = '';
     this.clipLoadingForm = false;
