@@ -23,6 +23,9 @@ from rest_framework.response import Response
 
 # Create your views here.
 
+def home(request):
+    return render(request, 'index.html', context=None)
+
 
 def index(request):
     multimedia_list = Multimedia.objects.all()
@@ -117,7 +120,9 @@ def signUp(request):
 
 def get_user(request):
     if request.user.is_authenticated:
-        return render(request, 'gallery/userDetails.html')
+        user = UserProfile.objects.get(user=request.user)
+        args = {'currentUser': user}
+        return render(request, 'gallery/userDetails.html', args)
 
     return HttpResponseRedirect(reverse('multimedia:index'))
 
