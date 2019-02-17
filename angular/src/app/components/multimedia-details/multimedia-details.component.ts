@@ -16,6 +16,8 @@ import {
 export class MultimediaDetailsComponent implements OnInit, OnChanges {
   @Input() multimedia;
 
+  @Input() authenticated;
+
   @Output() private closeModal = new EventEmitter<boolean>();
 
   constructor() {}
