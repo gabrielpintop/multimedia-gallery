@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^change_password/$', views.change_password, name='change_password'),
     url(r'^getMulti/$', views.getMulti, name='getMulti'),
     url(r'^getUser/$', views.getUser, name='getUser'),
+    url(r'^login/$', views.login, name='login'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

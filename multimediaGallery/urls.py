@@ -20,6 +20,3 @@ urlpatterns = [
     path('api/', include('gallery.urls', namespace="multimedia")),
 ]
 
-urlpatterns += [
-    path(r'^api/auth', include('rest_framework.urls', namespace='rest_framework'))
-]
