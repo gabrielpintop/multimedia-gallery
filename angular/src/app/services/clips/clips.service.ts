@@ -31,9 +31,21 @@ export class ClipsService {
     });
   }
 
-  addClips(name: string, initialSec: Number, finalSec: Number, username: string, idMultimedia: Number, duration: Number) {
+  addClips(
+    name: string,
+    initialSec: number,
+    finalSec: number,
+    username: string,
+    idMultimedia: number,
+    duration: number
+  ) {
     return new Promise((resolve, reject) => {
-      if (name === '' || initialSec < 0 || finalSec == 0 || finalSec > duration) {
+      if (
+        name === '' ||
+        initialSec < 0 ||
+        finalSec == 0 ||
+        finalSec > duration
+      ) {
         reject('Invalid data for clips');
       } else {
         const options = {
@@ -58,7 +70,7 @@ export class ClipsService {
             },
             err => {
               console.log(err);
-              reject(err.error);
+              reject(err);
             }
           );
       }

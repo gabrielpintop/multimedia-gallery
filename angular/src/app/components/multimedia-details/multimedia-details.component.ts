@@ -109,16 +109,28 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
   onSubmit() {
     this.clipFormErrorMessage = '';
     this.clipFormError = false;
-    this.clipSubmitSuccess = true;
+    this.clipSubmitSuccess = false;
     this.clipLoadingForm = true;
     const username = this.authenticationService.isAuthenticated();
     this.clipsService
-      .addClips(this.clip.name, this.clip.initialSec, this.clip.finalSec, username, this.multimedia.id, this.duration)
+      .addClips(
+        this.clip.name,
+        this.clip.initialSec,
+        this.clip.finalSec,
+        username,
+        this.multimedia.id,
+        this.duration
+      )
       .then(data => {
+        this.clip.name = '';
+        this.clip.initialSec = 0;
+        this.clip.finalSec = this.duration;
+        this.clipSubmitSuccess = true;
+        this.clipLoadingForm = false;
         this.loadClips();
       })
       .catch(err => {
-        this.clipFormErrorMessage = err;
+        this.clipFormErrorMessage = 'Error creando el clip';
         this.clipFormError = true;
         this.clipLoadingForm = false;
       });
@@ -153,6 +165,8 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
       audio.pause();
     }
 
+    this.clipSubmitSuccess = false;
+    this.clipLoadingForm = false;
     this.clipFormError = false;
     this.clipFormErrorMessage = '';
     this.clipLoadingForm = false;
