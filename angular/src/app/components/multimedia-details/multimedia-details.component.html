@@ -27,7 +27,7 @@
           width="300px" style="max-width: 100%;" />
       </div>
       <div *ngIf="selectedClip" class="alert alert-info mt-3" role="alert">
-        The media will be played (only one time) from second <b>{{selectedClip.initialSec}}</b> to second <b>{{selectedClip.finalSec}}</b>
+        The media will be played (only one time) from second <b>{{selectedClip.fields.initialSec}}</b> to second <b>{{selectedClip.fields.finalSec}}</b>
         when you
         hit the play button
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -57,26 +57,29 @@
       </div>
       <ng-container *ngIf="loadedMetadata && (multimedia.type.typeId === 'Video' || multimedia.type.typeId === 'Audio')">
 
-        <ng-container *ngIf="clips">
+        <ng-container>
           <hr />
           <h5 class="text-center mb-3">Suggested clips</h5>
-          <p class="text-center">Select a clip to play by clicking the button</p>
-          <ul class="list-group border border-dark shadow rounded mt-2 mb-4">
-            <li *ngIf="clips.length === 0" class="list-group-item text-center">
-              <h5>There are no suggested clips for this media. Please add one</h5>
-            </li>
-            <li *ngFor="let clip of clips" class="list-group-item">
-              <div class="row row-middle">
-                <div class="col-sm-10 col-12">
-                  <h5>{{clip.name}}</h5>
-                  {{clip.initialSec}}s - {{clip.finalSec}}s
+          <ng-container *ngIf="!loadingClips && clips">
+            <p class="text-center">Select a clip to play by clicking the button</p>
+            <ul class="list-group border border-dark shadow rounded mt-2 mb-4">
+              <li *ngIf="clips.length === 0" class="list-group-item text-center">
+                <h5>There are no suggested clips for this media. Please add one</h5>
+              </li>
+              <li *ngFor="let clip of clips" class="list-group-item">
+                <div class="row row-middle">
+                  <div class="col-sm-10 col-12">
+                    <h5>{{clip.fields.name}}</h5>
+                    {{clip.fields.initialSec}}s - {{clip.fields.finalSec}}s
+                  </div>
+                  <div class="col-sm-2 col-12 text-right">
+                    <button class="btn-primary btn shadow" (click)="playClip(clip)"><i class="fas fa-play"></i></button>
+                  </div>
                 </div>
-                <div class="col-sm-2 col-12 text-right">
-                  <button class="btn-primary btn shadow" (click)="playClip(clip)"><i class="fas fa-play"></i></button>
-                </div>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </ng-container>
+          <sk-chasing-dots *ngIf="loadingClips" [color]="success"></sk-chasing-dots>
           <hr />
         </ng-container>
 

@@ -21,11 +21,10 @@ export class ClipsService {
         .get(environment.requestBase + '/api/clips/' + multimedia.id, options)
         .subscribe(
           (data: any) => {
-            console.log(data);
-
             resolve(data);
           },
           err => {
+            console.log(err);
             reject('There was an error getting the clips');
           }
         );

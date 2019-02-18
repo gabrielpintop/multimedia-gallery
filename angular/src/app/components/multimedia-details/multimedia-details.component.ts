@@ -21,9 +21,7 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
 
   @Output() private closeModal = new EventEmitter<boolean>();
 
-  constructor(
-    private clipsService: ClipsService
-  ) {}
+  constructor(private clipsService: ClipsService) {}
 
   public clip = {
     name: '',
@@ -58,6 +56,8 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
 
   private originalUrl = '';
 
+  public loadingClips = true;
+
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -73,21 +73,23 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
     this.clipsService
       .getClips(this.multimedia)
       .then((data: any) => {
-        this.clipsOptions = data.fields;
-        console.log(this.clipsOptions)
+        this.clipsOptions = data;
         this.clipsOptions.sort(this.compare);
         this.clips = this.clipsOptions;
+        this.loadingClips = false;
       })
       .catch(err => {
+        this.clips = [];
+        this.loadingClips = false;
         alert(err);
       });
   }
 
   compare(a, b) {
-    if (a.name < b.name) {
+    if (a.fields.name < b.fields.name) {
       return 1;
     }
-    if (a.name > b.name) {
+    if (a.fields.name > b.fields.name) {
       return -1;
     }
     return 0;
@@ -101,7 +103,6 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-
     if (this.clip.name === '') {
       this.clipFormErrorMessage = 'The name of the clip is required';
       this.clipFormError = true;
@@ -143,7 +144,11 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
     console.log(clip);
     this.selectedClip = clip;
     this.urlToPlay =
-      this.originalUrl + '#t=' + clip.initialSec + ',' + clip.finalSec;
+      this.originalUrl +
+      '#t=' +
+      clip.fields.initialSec +
+      ',' +
+      clip.fields.finalSec;
     document.getElementById('mediaBody').scrollIntoView();
   }
 
