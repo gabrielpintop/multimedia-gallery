@@ -1,4 +1,5 @@
 import { ClipsService } from 'src/app/services/clips/clips.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import {
   Component,
   OnInit,
@@ -21,7 +22,10 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
 
   @Output() private closeModal = new EventEmitter<boolean>();
 
-  constructor(private clipsService: ClipsService) {}
+  constructor(
+    private clipsService: ClipsService,
+    private authenticationService: AuthenticationService
+  ) {}
 
   public clip = {
     name: '',
@@ -103,35 +107,21 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    if (this.clip.name === '') {
-      this.clipFormErrorMessage = 'The name of the clip is required';
-      this.clipFormError = true;
-    } else if (this.clip.initialSec >= this.duration) {
-      this.clipFormErrorMessage =
-        'The start second can´t be equal or greater to the video duration';
-      this.clipFormError = true;
-    } else if (this.clip.finalSec <= 0) {
-      this.clipFormErrorMessage =
-        'The end second can´t be equal or less than 0';
-      this.clipFormError = true;
-    } else if (this.clip.finalSec <= this.clip.initialSec) {
-      this.clipFormErrorMessage =
-        'The end second can´t be equal or less than the start second';
-      this.clipFormError = true;
-    } else {
-      this.clipFormErrorMessage = '';
-      this.clipFormError = false;
-      this.clipSubmitSuccess = false;
-      this.clipLoadingForm = true;
-
-      setTimeout(() => {
-        this.clip.name = '';
-        this.clip.initialSec = 0;
-        this.clip.finalSec = this.duration;
+    this.clipFormErrorMessage = '';
+    this.clipFormError = false;
+    this.clipSubmitSuccess = true;
+    this.clipLoadingForm = true;
+    const username = this.authenticationService.isAuthenticated();
+    this.clipsService
+      .addClips(this.clip.name, this.clip.initialSec, this.clip.finalSec, username, this.multimedia.id, this.duration)
+      .then(data => {
+        this.loadClips();
+      })
+      .catch(err => {
+        this.clipFormErrorMessage = err;
+        this.clipFormError = true;
         this.clipLoadingForm = false;
-        this.clipSubmitSuccess = true;
-      }, 1000);
-    }
+      });
   }
 
   removeClip() {

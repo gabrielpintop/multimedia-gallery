@@ -30,4 +30,39 @@ export class ClipsService {
         );
     });
   }
+
+  addClips(name: string, initialSec: Number, finalSec: Number, username: string, idMultimedia: Number, duration: Number) {
+    return new Promise((resolve, reject) => {
+      if (name === '' || initialSec < 0 || finalSec == 0 || finalSec > duration) {
+        reject('Invalid data for clips');
+      } else {
+        const options = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json'
+          }),
+          withCredentials: true
+        };
+
+        const requestBody = {
+          name,
+          initialSec,
+          finalSec,
+          username,
+          idMultimedia
+        };
+
+        this.http
+          .post(environment.requestBase + '/api/addClip/', requestBody, options)
+          .subscribe(
+            (data: any) => {
+              resolve(data);
+            },
+            err => {
+              console.log(err);
+              reject(err.error);
+            }
+          );
+      }
+    });
+  }
 }
