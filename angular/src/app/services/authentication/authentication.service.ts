@@ -16,8 +16,7 @@ export class AuthenticationService {
         const options = {
           headers: new HttpHeaders({
             'Content-Type': 'application/json'
-          }),
-          withCredentials: true
+          })
         };
 
         const requestBody = {
