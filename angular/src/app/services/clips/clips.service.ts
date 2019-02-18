@@ -39,8 +39,7 @@ export class ClipsService {
         const options = {
           headers: new HttpHeaders({
             'Content-Type': 'application/json'
-          }),
-          withCredentials: true
+          })
         };
 
         const requestBody = {
