@@ -18,5 +18,6 @@ urlpatterns = [
     url(r'^api/clips$', views.get_clips),
     url(r'^api/clips/(?P<idMultimedia>\d+)$', views.get_id_clip),
     url(r'^api/login/$', views.login, name='login'),
+    url(r'^api/createMultimedia/$', views.create_multimedia, name='create_multimedia'),
 ]
 urlpatterns += staticfiles_urlpatterns()

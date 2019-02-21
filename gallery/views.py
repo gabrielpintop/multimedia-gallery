@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import Multimedia, MultimediaForm, User, SignInForm, UserProfile, Clip
+from .models import Multimedia, MultimediaForm, User, SignInForm, UserProfile, Clip, Category, Type
 from django.contrib import messages
 from gallery.forms import RegistrationForm, EditProfileForm
 from django.contrib.auth.models import User
@@ -214,6 +214,8 @@ def login(request):
 
 
 @csrf_exempt
+@api_view(["POST"])
+@permission_classes((AllowAny,))
 def clip_create(request):
 
     if request.method == 'POST':
@@ -238,3 +240,26 @@ def get_clips(request):
 def get_id_clip(request, idMultimedia=None):
     clip_list = Clip.objects.filter(idMultimedia=idMultimedia)
     return HttpResponse(serializers.serialize("json", clip_list))
+
+
+@csrf_exempt
+@api_view(["POST"])
+@permission_classes((AllowAny,))
+def create_multimedia(request):
+
+    if request.method == 'POST':
+        json_data = json.loads(request.body)
+        print(create_multimedia,)
+        newMultimedia = Multimedia(
+            title=json_data['title'],
+            author=json_data['author'],
+            user=User.objects.get(username=json_data['username']),
+            creationDate=json_data['creationDate'],
+            city=json_data['city'],
+            country=json_data['country'],
+            url=json_data['url'],
+            category=Category.objects.get(id=json_data['category_id']),
+            type=Type.objects.get(id=json_data['type_id']))
+        print("multimedia create", newMultimedia.title)
+        newMultimedia.save()
+    return HttpResponse(serializers.serialize("json", [newMultimedia]))
