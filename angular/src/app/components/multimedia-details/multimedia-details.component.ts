@@ -1,3 +1,5 @@
+import { ClipsService } from 'src/app/services/clips/clips.service';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import {
   Component,
   OnInit,
@@ -16,14 +18,19 @@ import {
 export class MultimediaDetailsComponent implements OnInit, OnChanges {
   @Input() multimedia;
 
+  @Input() authenticated;
+
   @Output() private closeModal = new EventEmitter<boolean>();
 
-  constructor() {}
+  constructor(
+    private clipsService: ClipsService,
+    private authenticationService: AuthenticationService
+  ) {}
 
   public clip = {
     name: '',
-    startSecond: 0,
-    endSecond: 0
+    initialSec: 0,
+    finalSec: 0
   };
 
   public selectedClip = null;
@@ -47,27 +54,13 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
   public startTime = 0;
   public endTime = Number.MAX_VALUE;
 
-  private clipsOptions = [
-    {
-      name: 'First clip',
-      startSecond: 0,
-      endSecond: 12
-    },
-    {
-      name: 'Second clip',
-      startSecond: 4,
-      endSecond: 12
-    },
-    {
-      name: 'Third clip',
-      startSecond: 8,
-      endSecond: 10
-    }
-  ];
+  private clipsOptions = [];
 
   public urlToPlay = '';
 
   private originalUrl = '';
+
+  public loadingClips = true;
 
   ngOnInit() {}
 
@@ -75,51 +68,75 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
     if (changes.multimedia.currentValue) {
       this.originalUrl = changes.multimedia.currentValue.url;
       this.urlToPlay = this.originalUrl;
+      this.loadClips();
     }
+  }
+
+  loadClips() {
+    console.log(this.multimedia);
+    this.clipsService
+      .getClips(this.multimedia)
+      .then((data: any) => {
+        this.clipsOptions = data;
+        this.clipsOptions.sort(this.compare);
+        this.clips = this.clipsOptions;
+        this.loadingClips = false;
+      })
+      .catch(err => {
+        this.clips = [];
+        this.loadingClips = false;
+        alert(err);
+      });
+  }
+
+  compare(a, b) {
+    if (a.fields.name < b.fields.name) {
+      return 1;
+    }
+    if (a.fields.name > b.fields.name) {
+      return -1;
+    }
+    return 0;
   }
 
   setDuration(media) {
     this.duration = Math.floor(media.duration);
-    this.clip.endSecond = this.duration;
+    this.clip.finalSec = this.duration;
     this.loadedMetadata = true;
     this.clips = this.clipsOptions;
   }
 
   onSubmit() {
-    if (this.clip.name === '') {
-      this.clipFormErrorMessage = 'The name of the clip is required';
-      this.clipFormError = true;
-    } else if (this.clip.startSecond >= this.duration) {
-      this.clipFormErrorMessage =
-        'The start second can´t be equal or greater to the video duration';
-      this.clipFormError = true;
-    } else if (this.clip.endSecond <= 0) {
-      this.clipFormErrorMessage =
-        'The end second can´t be equal or less than 0';
-      this.clipFormError = true;
-    } else if (this.clip.endSecond <= this.clip.startSecond) {
-      this.clipFormErrorMessage =
-        'The end second can´t be equal or less than the start second';
-      this.clipFormError = true;
-    } else {
-      this.clipFormErrorMessage = '';
-      this.clipFormError = false;
-      this.clipSubmitSuccess = false;
-      this.clipLoadingForm = true;
-
-      setTimeout(() => {
+    this.clipFormErrorMessage = '';
+    this.clipFormError = false;
+    this.clipSubmitSuccess = false;
+    this.clipLoadingForm = true;
+    const username = this.authenticationService.isAuthenticated();
+    this.clipsService
+      .addClips(
+        this.clip.name,
+        this.clip.initialSec,
+        this.clip.finalSec,
+        username,
+        this.multimedia.id,
+        this.duration
+      )
+      .then(data => {
         this.clip.name = '';
-        this.clip.startSecond = 0;
-        this.clip.endSecond = this.duration;
-        this.clipLoadingForm = false;
+        this.clip.initialSec = 0;
+        this.clip.finalSec = this.duration;
         this.clipSubmitSuccess = true;
-      }, 1000);
-    }
+        this.clipLoadingForm = false;
+        this.loadClips();
+      })
+      .catch(err => {
+        this.clipFormErrorMessage = 'Error creando el clip';
+        this.clipFormError = true;
+        this.clipLoadingForm = false;
+      });
   }
 
   removeClip() {
-    console.log('HASA');
-
     if (this.selectedClip) {
       this.selectedClip = null;
     }
@@ -129,11 +146,27 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
     console.log(clip);
     this.selectedClip = clip;
     this.urlToPlay =
-      this.originalUrl + '#t=' + clip.startSecond + ',' + clip.endSecond;
+      this.originalUrl +
+      '#t=' +
+      clip.fields.initialSec +
+      ',' +
+      clip.fields.finalSec;
     document.getElementById('mediaBody').scrollIntoView();
   }
 
   close() {
+    if (this.multimedia.type.typeId === 'Video') {
+      const video = document.getElementById('mediaPlayer') as HTMLVideoElement;
+      video.pause();
+    } else if (this.multimedia.type.typeId === 'Audio') {
+      const audio: HTMLMediaElement = document.getElementById(
+        'mediaPlayer'
+      ) as HTMLAudioElement;
+      audio.pause();
+    }
+
+    this.clipSubmitSuccess = false;
+    this.clipLoadingForm = false;
     this.clipFormError = false;
     this.clipFormErrorMessage = '';
     this.clipLoadingForm = false;

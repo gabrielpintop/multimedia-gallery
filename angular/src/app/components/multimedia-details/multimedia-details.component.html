@@ -23,11 +23,11 @@
 
         <img *ngIf="!multimedia.imageFile || multimedia.imageFile === ''" src="{{multimedia.url}}" alt="{{multimedia.title}}"
           width="300px" style="max-width: 100%;" />
-        <img *ngIf="!multimedia.imageFile && multimedia.imageFile !== ''" src="/{{multimedia.imageFile}}" alt="{{multimedia.title}}"
+        <img *ngIf="multimedia.imageFile && multimedia.imageFile !== ''" src="/{{multimedia.imageFile}}" alt="{{multimedia.title}}"
           width="300px" style="max-width: 100%;" />
       </div>
       <div *ngIf="selectedClip" class="alert alert-info mt-3" role="alert">
-        The media will be played (only one time) from second <b>{{selectedClip.startSecond}}</b> to second <b>{{selectedClip.endSecond}}</b>
+        The media will be played (only one time) from second <b>{{selectedClip.fields.initialSec}}</b> to second <b>{{selectedClip.fields.finalSec}}</b>
         when you
         hit the play button
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -57,60 +57,65 @@
       </div>
       <ng-container *ngIf="loadedMetadata && (multimedia.type.typeId === 'Video' || multimedia.type.typeId === 'Audio')">
 
-        <ng-container *ngIf="clips">
+        <ng-container>
           <hr />
           <h5 class="text-center mb-3">Suggested clips</h5>
-          <p class="text-center">Select a clip to play by clicking the button</p>
-          <ul class="list-group border border-dark shadow rounded mt-2 mb-4">
-            <li *ngIf="clips.length === 0" class="list-group-item text-center">
-              <h5>There are no suggested clips for this media. Please add one</h5>
-            </li>
-            <li *ngFor="let clip of clips" class="list-group-item">
-              <div class="row row-middle">
-                <div class="col-sm-10 col-12">
-                  <h5>{{clip.name}}</h5>
-                  {{clip.startSecond}}s - {{clip.endSecond}}s
+          <ng-container *ngIf="!loadingClips && clips">
+            <p class="text-center">Select a clip to play by clicking the button</p>
+            <ul class="list-group border border-dark shadow rounded mt-2 mb-4">
+              <li *ngIf="clips.length === 0" class="list-group-item text-center">
+                <h5>There are no suggested clips for this media. Please add one</h5>
+              </li>
+              <li *ngFor="let clip of clips" class="list-group-item">
+                <div class="row row-middle">
+                  <div class="col-sm-10 col-12">
+                    <h5>{{clip.fields.name}}</h5>
+                    {{clip.fields.initialSec}}s - {{clip.fields.finalSec}}s
+                  </div>
+                  <div class="col-sm-2 col-12 text-right">
+                    <button class="btn-primary btn shadow" (click)="playClip(clip)"><i class="fas fa-play"></i></button>
+                  </div>
                 </div>
-                <div class="col-sm-2 col-12 text-right">
-                  <button class="btn-primary btn shadow" (click)="playClip(clip)"><i class="fas fa-play"></i></button>
-                </div>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </ng-container>
+          <sk-chasing-dots *ngIf="loadingClips" [color]="success"></sk-chasing-dots>
           <hr />
         </ng-container>
 
-        <h5 class="text-center">Add clip</h5>
-        <div *ngIf="clipSubmitSuccess" class="alert alert-success" role="alert">
-          The clip was saved!
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form #clipForm="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" [(ngModel)]="clip.name" name="name" required [disabled]="clipLoadingForm ? true : null">
+        <ng-container *ngIf="authenticated">
+          <h5 class="text-center">Add clip</h5>
+          <div *ngIf="clipSubmitSuccess" class="alert alert-success" role="alert">
+            The clip was saved!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
-          <div class="form-group">
-            <label for="name">Start second</label>
-            <input type="number" min="0" step="1" max="{{clip.endSecond - 1}}" class="form-control" [(ngModel)]="clip.startSecond"
-              name="initialSecond" id="initialSecond" [disabled]="clipLoadingForm ? true : null" required>
-          </div>
-          <div class="form-group">
-            <label for="name">End second</label>
-            <input type="number" min="{{clip.startSecond + 1}}" max="{{duration}}" step="1" class="form-control" id="endSecond"
-              name="endSecond" [(ngModel)]="clip.endSecond" [disabled]="clipLoadingForm ? true : null" required>
-          </div>
-          <div *ngIf="clipFormError" class="alert alert-danger" role="alert">
-            {{clipFormErrorMessage}}
-          </div>
-          <div class="text-center">
-            <button type="submit" class="btn btn-success" *ngIf="!clipLoadingForm"><i class="fas fa-save"></i>&nbsp;Save
-              clip</button>
-            <sk-chasing-dots *ngIf="clipLoadingForm" [color]="success"></sk-chasing-dots>
-          </div>
-        </form>
+          <form #clipForm="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" [(ngModel)]="clip.name" name="name" required [disabled]="clipLoadingForm ? true : null">
+            </div>
+            <div class="form-group">
+              <label for="name">Start second</label>
+              <input type="number" min="0" step="1" max="{{clip.finalSec - 1}}" class="form-control" [(ngModel)]="clip.initialSec"
+                name="initialSecond" id="initialSecond" [disabled]="clipLoadingForm ? true : null" required>
+            </div>
+            <div class="form-group">
+              <label for="name">End second</label>
+              <input type="number" min="{{clip.initialSec + 1}}" max="{{duration}}" step="1" class="form-control" id="finalSec"
+                name="finalSec" [(ngModel)]="clip.finalSec" [disabled]="clipLoadingForm ? true : null" required>
+            </div>
+            <div *ngIf="clipFormError" class="alert alert-danger" role="alert">
+              {{clipFormErrorMessage}}
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-success" *ngIf="!clipLoadingForm"><i class="fas fa-save"></i>&nbsp;Save
+                clip</button>
+              <sk-chasing-dots *ngIf="clipLoadingForm" [color]="success"></sk-chasing-dots>
+            </div>
+          </form>
+        </ng-container>
 
       </ng-container>
     </div>

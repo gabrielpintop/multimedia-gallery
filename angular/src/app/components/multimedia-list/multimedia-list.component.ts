@@ -84,10 +84,6 @@ export class MultimediaListComponent implements OnInit {
             ? true
             : multimedia.type.typeId === this.mediaType;
 
-        console.log(
-          mediaBoolean + ' ' + multimedia.title + ' ' + categoryBoolean
-        );
-
         return categoryBoolean && mediaBoolean;
       });
     }

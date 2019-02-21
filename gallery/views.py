@@ -19,11 +19,12 @@ from rest_framework.status import (
     HTTP_200_OK
 )
 from rest_framework.response import Response
-from .serializers import MultimediaSerializer,UserSerializer
+from .serializers import MultimediaSerializer, UserSerializer
 import json
 from django.core import serializers
 
 # Create your views here.
+
 
 def home(request):
     return render(request, 'index.html', context=None)
@@ -92,9 +93,6 @@ def sign_in(request):
             form = SignInForm()
 
     return render(request, 'gallery/sign_in_form.html', {'form': form, 'error': error})
-
-
-# Handles the log out of an user
 
 
 def signUp(request):
@@ -214,6 +212,7 @@ def login(request):
     return Response({'token': token.key, 'username': user.username},
                     status=HTTP_200_OK)
 
+
 @csrf_exempt
 def clip_create(request):
 
@@ -224,7 +223,7 @@ def clip_create(request):
             name=json_data['name'],
             initialSec=json_data['initialSec'],
             finalSec=json_data['finalSec'],
-            userId=User.objects.get(id=json_data['userId']),
+            userId=User.objects.get(username=json_data['username']),
             idMultimedia=Multimedia.objects.get(id=(json_data['idMultimedia'])))
         print("clip create", newClip.name)
         newClip.save()
@@ -233,9 +232,9 @@ def clip_create(request):
 
 def get_clips(request):
     clip_list = Clip.objects.all()
-    return HttpResponse(serializers.serialize("json",clip_list))
+    return HttpResponse(serializers.serialize("json", clip_list))
 
 
 def get_id_clip(request, idMultimedia=None):
-    clip_list = Clip.objects.filter(idMultimedia = idMultimedia)
-    return HttpResponse(serializers.serialize("json",clip_list))
+    clip_list = Clip.objects.filter(idMultimedia=idMultimedia)
+    return HttpResponse(serializers.serialize("json", clip_list))

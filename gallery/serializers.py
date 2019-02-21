@@ -24,7 +24,7 @@ class MultimediaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Multimedia
         fields = ('id', 'title', 'author', 'city', 'category',
-                  'user', 'type', 'country', 'url', 'imageFile')
+                  'user', 'type', 'country', 'url', 'imageFile', 'creationDate')
 
     def to_representation(self, instance):
         self.fields['user'] = UserSerializer(read_only=True)

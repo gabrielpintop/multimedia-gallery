@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class AuthenticationService {
         };
 
         this.http
-          .post('http://localhost:8000/api/login/', requestBody, options)
+          .post(environment.requestBase + '/api/login/', requestBody, options)
           .subscribe(
             (data: any) => {
               localStorage.setItem('USER', JSON.stringify(data));

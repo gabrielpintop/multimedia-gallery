@@ -27,16 +27,16 @@
         <i class="fas fa-user"></i>&nbsp;{{username}}
       </button>
       <div class="dropdown-menu dropdown-menu-right border border-secondary" aria-labelledby="dropdownMenuLoggedIn">
-        <a class="dropdown-item" href="/userDetails"><i class="fas fa-info-circle"></i>&nbsp;Profile</a>
+        <!-- <a class="dropdown-item" href="/userDetails"><i class="fas fa-info-circle"></i>&nbsp;Profile</a> -->
         <button class="dropdown-item" (click)="logOut()"><i class="fas fa-sign-out-alt"></i>&nbsp;Log out</button>
       </div>
     </div>
   </div>
-  <div *ngIf="isAuthenticated" class="col-12 text-center">
+  <!-- <div *ngIf="isAuthenticated" class="col-12 text-center">
     <a class="text-white btn btn-primary m-2 shadow" href="/add"><i class="fas fa-plus"></i>&nbsp;Add
       multimedia
     </a>
-  </div>
+  </div> -->
 
   <div *ngIf="!isAuthenticated" class="col-lg-4 col-md-2 text-right">
     <button type="button" class="text-white text-decoration-none btn btn-primary m-2 shadow" (click)="openLoginModal(loginModal)">
@@ -55,7 +55,7 @@
     <br />
   </div>
 
-  <div *ngFor="let multimedia of multimediaList" class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+  <div *ngFor="let multimedia of multimediaList" class="col-md-4 col-sm-6 col-12 mb-4">
     <div class="card mx-auto shadow" style="max-width: 18rem;" [ngClass]="{'border-dark': multimedia.type.typeId === 'Video', 'border-success': multimedia.type.typeId == 'Audio', 'border-info': multimedia.type.typeId == 'Image' }">
       <div class="card-header"><i class="fas fa-video" [ngClass]="{'fas fa-video': multimedia.type.typeId === 'Video', 'far fa-file-audio': multimedia.type.typeId == 'Audio', 'fa fa-image':  multimedia.type.typeId == 'Image' }"></i></div>
       <div class="card-body text-dark">
@@ -72,7 +72,7 @@
 
           <img *ngIf="!multimedia.imageFile || multimedia.imageFile === ''" src="{{multimedia.url}}" alt="{{multimedia.title}}"
             height="180px" style="max-width: 100%;" />
-          <img *ngIf="!multimedia.imageFile && multimedia.imageFile !== ''" src="/{{multimedia.imageFile}}" alt="{{multimedia.title}}"
+          <img *ngIf="multimedia.imageFile && multimedia.imageFile !== ''" src="/{{multimedia.imageFile}}" alt="{{multimedia.title}}"
             height="180px" style="max-width: 100%;" />
         </div>
 
@@ -98,7 +98,7 @@
 </div>
 
 <div bsModal #multimediaDetailsModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="multimediaDetailsModal">
-  <app-multimedia-details [multimedia]="selectedMultimedia" (closeModal)="closeModal($event)"></app-multimedia-details>
+  <app-multimedia-details [multimedia]="selectedMultimedia" [authenticated]="isAuthenticated" (closeModal)="closeModal($event)"></app-multimedia-details>
 </div>
 
 <div bsModal #loginModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loginModal">
