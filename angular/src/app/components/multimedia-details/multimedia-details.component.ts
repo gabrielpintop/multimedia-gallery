@@ -77,6 +77,8 @@ export class MultimediaDetailsComponent implements OnInit, OnChanges {
     this.clipsService
       .getClips(this.multimedia)
       .then((data: any) => {
+        console.log(data);
+
         this.clipsOptions = data;
         this.clipsOptions.sort(this.compare);
         this.clips = this.clipsOptions;

@@ -9,7 +9,6 @@ export class ClipsService {
   constructor(private http: HttpClient) {}
 
   getClips(multimedia) {
-    console.log(multimedia.id);
     return new Promise((resolve, reject) => {
       const options = {
         headers: new HttpHeaders({
