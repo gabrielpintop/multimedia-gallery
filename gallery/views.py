@@ -10,7 +10,7 @@ from django.core.mail import EmailMessage
 from gallery.forms import RegistrationForm, EditProfileForm
 from django.contrib.auth.models import User
 from rest_framework import generics
-from .serializers import MultimediaSerializer, UserSerializer
+from .serializers import MultimediaSerializer, UserSerializer, UserCreateSeralizer
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
@@ -24,7 +24,7 @@ from rest_framework.response import Response
 from .serializers import MultimediaSerializer, UserSerializer
 import json
 from django.core import serializers
-
+from rest_framework.generics import CreateAPIView
 # Create your views here.
 
 
@@ -277,3 +277,7 @@ def create_multimedia(request):
         print("multimedia create", newMultimedia.title)
         newMultimedia.save()
     return HttpResponse(serializers.serialize("json", [newMultimedia]))
+
+class UserCreateAPIView(CreateAPIView):
+    serializer_class = UserCreateSeralizer
+    queryset = User.objects.all()
