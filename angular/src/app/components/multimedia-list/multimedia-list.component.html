@@ -32,11 +32,11 @@
       </div>
     </div>
   </div>
-  <!-- <div *ngIf="isAuthenticated" class="col-12 text-center">
-    <a class="text-white btn btn-primary m-2 shadow" href="/add"><i class="fas fa-plus"></i>&nbsp;Add
+  <div *ngIf="isAuthenticated" class="col-12 text-center">
+    <a class="text-white btn btn-primary m-2 shadow" [routerLink]="['/addMultimedia']"><i class="fas fa-plus"></i>&nbsp;Add
       multimedia
     </a>
-  </div> -->
+  </div>
 
   <div *ngIf="!isAuthenticated" class="col-lg-4 col-md-2 text-right">
     <button type="button" class="text-white text-decoration-none btn btn-primary m-2 shadow" (click)="openLoginModal(loginModal)">
@@ -93,7 +93,7 @@
   </div>
 </div>
 
-<div *ngIf="loading" class="text-center">
+<div id="loadingContainer" *ngIf="loading" class="text-center">
   <sk-chasing-dots [color]="success"></sk-chasing-dots>
 </div>
 
