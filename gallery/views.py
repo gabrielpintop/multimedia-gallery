@@ -3,12 +3,14 @@ from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import Multimedia, MultimediaForm, User, SignInForm, UserProfile, Clip
+from .models import Multimedia, MultimediaForm, User, SignInForm, UserProfile, Clip, Category, Type
 from django.contrib import messages
+from django.conf import settings
+from django.core.mail import EmailMessage
 from gallery.forms import RegistrationForm, EditProfileForm
 from django.contrib.auth.models import User
 from rest_framework import generics
-from .serializers import MultimediaSerializer, UserSerializer
+from .serializers import MultimediaSerializer, UserSerializer, UserCreateSeralizer
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
@@ -22,7 +24,7 @@ from rest_framework.response import Response
 from .serializers import MultimediaSerializer, UserSerializer
 import json
 from django.core import serializers
-
+from rest_framework.generics import CreateAPIView
 # Create your views here.
 
 
@@ -104,6 +106,12 @@ def signUp(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
+            subject = 'Bienvenido a nuestra galería'
+            message = 'Gracias por registrarte en nuestra plataforma, estamos felices que seas parte de Multimedia Gallery. No te pierdas del contenido multimedia de nuestro portal.'
+            from_email = settings.EMAIL_HOST_USER
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(subject, message,from_email, to = [to_email])
+            email.send()
             return redirect('/')
         else:
             messages.error(request,
@@ -214,6 +222,8 @@ def login(request):
 
 
 @csrf_exempt
+@api_view(["POST"])
+@permission_classes((AllowAny,))
 def clip_create(request):
 
     if request.method == 'POST':
@@ -227,6 +237,12 @@ def clip_create(request):
             idMultimedia=Multimedia.objects.get(id=(json_data['idMultimedia'])))
         print("clip create", newClip.name)
         newClip.save()
+        subject = '¡Felicidades! Creaste un nuevo clip'
+        message = 'Queremos confirmarte que tu nuevo clip ha sido creado. No te pierdas de todo el contenido multimedia de nuestro portal.'
+        from_email = settings.EMAIL_HOST_USER
+        to_email = newClip.userId.email
+        email = EmailMessage(subject, message, from_email, to=[to_email])
+        email.send()
     return HttpResponse(serializers.serialize("json", [newClip]))
 
 
@@ -238,3 +254,39 @@ def get_clips(request):
 def get_id_clip(request, idMultimedia=None):
     clip_list = Clip.objects.filter(idMultimedia=idMultimedia)
     return HttpResponse(serializers.serialize("json", clip_list))
+
+
+def get_category(request):
+    category_list = Category.objects.all()
+    return HttpResponse(serializers.serialize("json", category_list))
+
+
+@csrf_exempt
+@api_view(["POST"])
+@permission_classes((AllowAny,))
+def create_multimedia(request):
+
+    if request.method == 'POST':
+        json_data = json.loads(request.body)
+        print(create_multimedia,)
+        newMultimedia = Multimedia(
+            title=json_data['title'],
+            author=json_data['author'],
+            user=User.objects.get(username=json_data['username']),
+            creationDate=json_data['creationDate'],
+            city=json_data['city'],
+            country=json_data['country'],
+            url=json_data['url'],
+            category=Category.objects.get(id=json_data['category_id']),
+            type=Type.objects.get(id=json_data['type_id']))
+        print("multimedia create", newMultimedia.title)
+        newMultimedia.save()
+    return HttpResponse(serializers.serialize("json", [newMultimedia]))
+
+
+class UserCreateAPIView(CreateAPIView):
+    serializer_class = UserCreateSeralizer
+    queryset = User.objects.all()
+
+
+

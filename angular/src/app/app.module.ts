@@ -10,13 +10,15 @@ import { AppComponent } from './app.component';
 import { MultimediaListComponent } from './components/multimedia-list/multimedia-list.component';
 import { MultimediaDetailsComponent } from './components/multimedia-details/multimedia-details.component';
 import { LoginComponent } from './components/login/login.component';
+import { MultimediaAddComponent } from './components/multimedia-add/multimedia-add.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MultimediaListComponent,
     MultimediaDetailsComponent,
-    LoginComponent
+    LoginComponent,
+    MultimediaAddComponent
   ],
   imports: [
     BrowserModule,
