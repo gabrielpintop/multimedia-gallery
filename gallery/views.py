@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import Multimedia, MultimediaForm, User, SignInForm, UserProfile, Clip, Category, Type
 from django.contrib import messages
+from django.conf import settings
+from django.core.mail import EmailMessage
 from gallery.forms import RegistrationForm, EditProfileForm
 from django.contrib.auth.models import User
 from rest_framework import generics
@@ -104,6 +106,12 @@ def signUp(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
+            subject = 'Bienvenido a nuestra galería'
+            message = 'Gracias por registrarte en nuestra plataforma, estamos felices que seas parte de Multimedia Gallery. No te pierdas del contenido multimedia de nuestro portal.'
+            from_email = settings.EMAIL_HOST_USER
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(subject, message,from_email, to = [to_email])
+            email.send()
             return redirect('/')
         else:
             messages.error(request,
@@ -229,6 +237,12 @@ def clip_create(request):
             idMultimedia=Multimedia.objects.get(id=(json_data['idMultimedia'])))
         print("clip create", newClip.name)
         newClip.save()
+        subject = '¡Felicidades! Creaste un nuevo clip'
+        message = 'Queremos confirmarte que tu nuevo clip ha sido creado. No te pierdas de todo el contenido multimedia de nuestro portal.'
+        from_email = settings.EMAIL_HOST_USER
+        to_email = newClip.userId.email
+        email = EmailMessage(subject, message, from_email, to=[to_email])
+        email.send()
     return HttpResponse(serializers.serialize("json", [newClip]))
 
 
