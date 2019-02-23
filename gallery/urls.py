@@ -20,5 +20,6 @@ urlpatterns = [
     url(r'^api/login/$', views.login, name='login'),
     url(r'^api/createMultimedia/$', views.create_multimedia, name='create_multimedia'),
     url(r'^api/addUser/$', views.UserCreateAPIView.as_view(), name='create_user'),
+    url(r'^api/categories/$', views.get_category, name='get_category'),
 ]
 urlpatterns += staticfiles_urlpatterns()

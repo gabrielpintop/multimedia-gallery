@@ -256,6 +256,11 @@ def get_id_clip(request, idMultimedia=None):
     return HttpResponse(serializers.serialize("json", clip_list))
 
 
+def get_category(request):
+    category_list = Category.objects.all()
+    return HttpResponse(serializers.serialize("json", category_list))
+
+
 @csrf_exempt
 @api_view(["POST"])
 @permission_classes((AllowAny,))
@@ -278,6 +283,10 @@ def create_multimedia(request):
         newMultimedia.save()
     return HttpResponse(serializers.serialize("json", [newMultimedia]))
 
+
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSeralizer
     queryset = User.objects.all()
+
+
+
