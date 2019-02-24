@@ -11,6 +11,7 @@ import { MultimediaListComponent } from './components/multimedia-list/multimedia
 import { MultimediaDetailsComponent } from './components/multimedia-details/multimedia-details.component';
 import { LoginComponent } from './components/login/login.component';
 import { MultimediaAddComponent } from './components/multimedia-add/multimedia-add.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MultimediaAddComponent } from './components/multimedia-add/multimedia-a
     MultimediaListComponent,
     MultimediaDetailsComponent,
     LoginComponent,
-    MultimediaAddComponent
+    MultimediaAddComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
