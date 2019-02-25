@@ -47,11 +47,17 @@ export class SignUpComponent implements OnInit {
         this.register.email,
       )
       .then(data => {
+        this.register.username = '',
+        this.register.password = '',
+        this.register.password2 = '',
+        this.register.first_name = '',
+        this.register.last_name = '',
+        this.register.email = '',
         this.close();
         window.location.reload();
       })
       .catch(err => {
-        this.registerFormErrorMessage = 'An error occurred while creating the user';
+        this.registerFormErrorMessage = err;
         this.registerFormError = true;
         this.registerLoadingForm = false;
       });
@@ -62,6 +68,7 @@ export class SignUpComponent implements OnInit {
   }
 
   openLoginModal(modal) {
+    this.close();
     this.modal = modal;
     this.modal.show();
   }

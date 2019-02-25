@@ -23,11 +23,11 @@ console.log(username,password,password2,first_name,last_name,email);
         password === username ||
         password === first_name
       ) {
-        reject('You password must be different to your personal information');
+        return reject('You password must be different to your personal information');
       } else if (
         password2 != password
       ) {
-        reject('Your passwords do not match');
+        return reject('Your passwords do not match');
       } else {
         const options = {
           headers: new HttpHeaders({

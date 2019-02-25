@@ -47,7 +47,7 @@
           <sk-chasing-dots *ngIf="registerLoadingForm" [color]="info"></sk-chasing-dots>
           <button type="button" *ngIf="!registerLoadingForm" class="btn btn-danger m-2 shadow" (click)="close()">Cancel</button>
           <div class="border-top pt-3">
-              <small class="text-muted"> Already have an account? <a class="ml-2" [routerLink]="" (click)="close();openLoginModal(loginModal)">Sign In</a></small>
+              <small class="text-muted"> Already have an account? <a class="ml-2" [routerLink]="" (click)="openLoginModal(loginModal)">Sign In</a></small>
           </div>
         </div>
       </form>
