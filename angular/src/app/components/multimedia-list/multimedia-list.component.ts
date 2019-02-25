@@ -110,6 +110,11 @@ export class MultimediaListComponent implements OnInit {
     this.modal.show();
   }
 
+  openSignUpModal(modal) {
+    this.modal = modal;
+    this.modal.show();
+  }
+
   closeModal(close) {
     this.modal.hide();
   }

@@ -42,7 +42,7 @@
     <button type="button" class="text-white text-decoration-none btn btn-primary m-2 shadow" (click)="openLoginModal(loginModal)">
       <i class="fas fa-sign-in-alt"></i>&nbsp;Sign in
     </button>
-    <a class="text-white text-decoration-none btn btn-info m-2 shadow" href="/signUp">
+    <a class="text-white text-decoration-none btn btn-info m-2 shadow" (click)="openSignUpModal(signUpModal)">
       <i class="fas fa-user-plus"></i>&nbsp;Sign up
     </a>
   </div>
@@ -103,4 +103,8 @@
 
 <div bsModal #loginModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loginModal">
   <app-login (closeModal)="closeModal($event)"></app-login>
+</div>
+
+<div bsModal #signUpModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="signUpModal">
+  <app-sign-up (closeModal)="closeModal($event)"></app-sign-up>
 </div>

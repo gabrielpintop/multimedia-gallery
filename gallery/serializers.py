@@ -1,6 +1,6 @@
 from .models import Multimedia, User, Category, Type
 from rest_framework import serializers
-
+from . import models
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,12 +26,18 @@ class UserCreateSeralizer(serializers.ModelSerializer):
         username = validated_data['username']
         email = validated_data['email']
         password = validated_data['password']
+        first_name = validated_data['first_name']
+        last_name = validated_data['last_name']
         user_obj = User(
-            username = username,
-            email =email
+            username=username,
+            email=email,
+            first_name=first_name,
+            last_name=last_name
         )
         user_obj.set_password(password)
         user_obj.save()
+        user_profile = models.UserProfile(user=user_obj, photo=' ', city=' ', country=' ')
+        user_profile.save()
         return validated_data
 
 
